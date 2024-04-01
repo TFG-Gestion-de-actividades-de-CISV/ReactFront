@@ -9,7 +9,7 @@ const LoginView = () => {
         maxWidth="xs"
         sx={{
           display: "flex",
-          minHeight: "90vh",
+          minHeight: "100vh",
           alignItems: "center",
         }}
       >
