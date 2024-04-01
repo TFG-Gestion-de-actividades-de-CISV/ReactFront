@@ -5,7 +5,14 @@ import LoginForm from "../Components/LoginForm";
 const LoginView = () => {
   return (
     <>
-      <Container maxWidth="xs">
+      <Container
+        maxWidth="xs"
+        sx={{
+          display: "flex",
+          minHeight: "90vh",
+          alignItems: "center",
+        }}
+      >
         <LoginForm />
       </Container>
     </>

@@ -16,9 +16,9 @@ const LoginForm = () => {
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
+        <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant="h3" align="center">
+            <Typography variant="h2" align="center">
               Login
             </Typography>
           </Grid>
