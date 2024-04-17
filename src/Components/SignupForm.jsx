@@ -14,9 +14,14 @@ const LoginForm = () => {
     console.log(data);
   }
   const [alergias, setAlergias] = useState(false);
+  const [familiares, setFamiliares] = useState(false);
 
-  const handleSwitchChange = (event) => {
+  const handleSwitchAlergiasChange = (event) => {
     setAlergias(event.target.checked);
+  };
+
+  const handleSwitchFamiliaresChange = (event) => {
+    setFamiliares(event.target.checked);
   };
 
   return (
@@ -24,7 +29,7 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant="h2" align="center">
+            <Typography variant="h3" align="center">
               Registro
             </Typography>
           </Grid>
@@ -119,25 +124,6 @@ const LoginForm = () => {
             />
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Código de socio"
-              required
-              size="small"
-              type="text"
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Código de familia"
-              required
-              size="small"
-              type="text"
-              fullWidth
-            />
-          </Grid>
-
           <Grid item md={6}>
             <Typography variant="h6">
               ¿Tiene alergias / restricciones alimenticias?
@@ -147,7 +133,7 @@ const LoginForm = () => {
           <Grid item md={6}>
             <Switch
               checked={alergias}
-              onChange={handleSwitchChange}
+              onChange={handleSwitchAlergiasChange}
               color="primary"
             ></Switch>
           </Grid>
@@ -162,6 +148,32 @@ const LoginForm = () => {
                 multiline
                 minRows={3}
                 maxRows={6}
+              />
+            )}
+          </Grid>
+
+          <Grid item md={6}>
+            <Typography variant="h6">
+              ¿Tiene algún familiar registrado?
+            </Typography>
+          </Grid>
+
+          <Grid item md={6}>
+            <Switch
+              checked={familiares}
+              onChange={handleSwitchFamiliaresChange}
+              color="primary"
+            ></Switch>
+          </Grid>
+
+          <Grid item xs={12}>
+            {familiares && (
+              <TextField
+                label="Correo electrónico del familiar"
+                required
+                size="small"
+                type="text"
+                fullWidth
               />
             )}
           </Grid>
