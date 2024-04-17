@@ -1,4 +1,4 @@
-import { Button, TextField, Typography, Grid } from "@mui/material";
+import { Button, TextField, Typography, Grid, Switch } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
@@ -63,10 +63,10 @@ const LoginForm = () => {
 
           <Grid item xs={12}>
             <Typography variant="p">
-              Don't have an account?
+              ¿No tienes una cuenta?{" "}
               <Link to="/signup">
                 <Button color="primary" size="small">
-                  Register
+                  Registrate
                 </Button>
               </Link>
             </Typography>

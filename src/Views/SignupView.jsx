@@ -6,7 +6,7 @@ const LoginView = () => {
   return (
     <>
       <Container
-        maxWidth="xs"
+        maxWidth="md"
         sx={{
           display: "flex",
           minHeight: "100vh",
