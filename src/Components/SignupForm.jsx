@@ -159,6 +159,9 @@ const LoginForm = () => {
                 size="small"
                 type="text"
                 fullWidth
+                multiline
+                minRows={3}
+                maxRows={6}
               />
             )}
           </Grid>
