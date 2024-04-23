@@ -3,15 +3,38 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
 
-const LoginForm = () => {
+const RegisterForm = () => {
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
+  const url = "http://localhost:8000/web_user/register/";
   function onSubmit(data) {
-    console.log(data);
+    const profileData = {
+      name: data.name,
+      surname: data.surname,
+      second_surname: data.second_surname,
+      city: data.city,
+      postal_code: data.postal_code,
+      phone: data.phone,
+      birthdate: data.birthdate,
+    };
+
+    const userData = {
+      email: data.email,
+      password: data.password,
+      profile: profileData,
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
   }
   const [alergias, setAlergias] = useState(false);
   const [familiares, setFamiliares] = useState(false);
@@ -36,19 +59,19 @@ const LoginForm = () => {
           <Grid item xs={12} md={4}>
             <TextField
               label="Nombre"
-              required
               size="small"
               type="text"
               fullWidth
+              {...register("name")}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
               label="Primer apellido"
-              required
               size="small"
               type="text"
               fullWidth
+              {...register("surname")}
             />
           </Grid>
           <Grid item xs={12} md={4}>
@@ -57,69 +80,74 @@ const LoginForm = () => {
               size="small"
               type="text"
               fullWidth
+              {...register("second_surname")}
             />
           </Grid>
           <Grid item xs={12} md={4}>
             <Typography variant="h6">Fecha de nacimiento</Typography>
           </Grid>
           <Grid item xs={12} md={4}>
-            <TextField required size="small" type="date" fullWidth />
+            <TextField
+              size="small"
+              type="date"
+              fullWidth
+              {...register("birthdate")}
+            />
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               label="Correo electrónico"
-              required
               size="small"
               type="text"
               fullWidth
+              {...register("email")}
             />
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
               label="Télefono"
-              required
               size="small"
               type="text"
               fullWidth
+              {...register("phone")}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <TextField
               label="Ciudad"
-              required
               size="small"
               type="text"
               fullWidth
+              {...register("city")}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <TextField
               label="Código postal"
-              required
               size="small"
               type="text"
               fullWidth
+              {...register("postal_code")}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <TextField
               label="Contraseña"
-              required
               size="small"
-              type="text"
+              type="password"
               fullWidth
+              {...register("password")}
             />
           </Grid>
 
           <Grid item xs={12} md={6}>
             <TextField
               label="Repite contraseña"
-              required
               size="small"
-              type="text"
+              type="password"
               fullWidth
             />
           </Grid>
@@ -170,7 +198,6 @@ const LoginForm = () => {
             {familiares && (
               <TextField
                 label="Correo electrónico del familiar"
-                required
                 size="small"
                 type="text"
                 fullWidth
@@ -199,4 +226,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
