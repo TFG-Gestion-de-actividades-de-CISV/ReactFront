@@ -1,19 +1,26 @@
 import React from "react";
-import { Container } from "@mui/material";
+import { Container, Paper } from "@mui/material";
 import SignupForm from "../Components/SignupForm";
 
 const LoginView = () => {
   return (
     <>
       <Container
-        maxWidth="xs"
+        maxWidth="md"
         sx={{
           display: "flex",
           minHeight: "100vh",
           alignItems: "center",
         }}
       >
-        <SignupForm />
+        <Paper
+          elevation={20}
+          sx={{
+            padding: 3,
+          }}
+        >
+          <SignupForm />
+        </Paper>
       </Container>
     </>
   );
