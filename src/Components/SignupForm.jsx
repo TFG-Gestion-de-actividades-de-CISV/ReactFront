@@ -62,6 +62,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("name")}
             />
           </Grid>
@@ -71,6 +72,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("surname")}
             />
           </Grid>
@@ -80,6 +82,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("second_surname")}
             />
           </Grid>
@@ -91,6 +94,7 @@ const RegisterForm = () => {
               size="small"
               type="date"
               fullWidth
+              required
               {...register("birthdate")}
             />
           </Grid>
@@ -100,6 +104,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("email")}
             />
           </Grid>
@@ -109,6 +114,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("phone")}
             />
           </Grid>
@@ -119,6 +125,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("city")}
             />
           </Grid>
@@ -129,6 +136,7 @@ const RegisterForm = () => {
               size="small"
               type="text"
               fullWidth
+              required
               {...register("postal_code")}
             />
           </Grid>
@@ -139,6 +147,7 @@ const RegisterForm = () => {
               size="small"
               type="password"
               fullWidth
+              required
               {...register("password")}
             />
           </Grid>
@@ -149,6 +158,7 @@ const RegisterForm = () => {
               size="small"
               type="password"
               fullWidth
+              required
             />
           </Grid>
 
