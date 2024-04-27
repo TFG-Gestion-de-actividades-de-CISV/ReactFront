@@ -34,7 +34,10 @@ const RegisterForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(userData),
-    });
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
   }
   const [alergias, setAlergias] = useState(false);
   const [familiares, setFamiliares] = useState(false);
