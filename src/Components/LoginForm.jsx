@@ -1,16 +1,44 @@
 import { Button, TextField, Typography, Grid, Switch } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState(null);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
 
+  const url = "http://localhost:8000/web_user/login/";
+
   function onSubmit(data) {
-    console.log(data);
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            console.log(data);
+            navigate("/admin/main");
+          });
+        } else if (response.status === 404) {
+          setErrorMessage("Email o contraseña incorrectas");
+        } else {
+          console.log("La respuesta del servidor no fue OK");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setErrorMessage("Ha ocurrido un error. Por favor, inténtalo de nuevo.");
+      });
   }
 
   return (
@@ -22,6 +50,7 @@ const LoginForm = () => {
               Login
             </Typography>
           </Grid>
+
           <Grid item xs={12}>
             <TextField
               label="Email"
@@ -54,6 +83,12 @@ const LoginForm = () => {
               Forgot password?
             </Button>
           </Grid>
+
+          {errorMessage && (
+            <Grid item xs={12}>
+              <Typography color="error">{errorMessage}</Typography>
+            </Grid>
+          )}
 
           <Grid item xs={12}>
             <Button variant="outlined" type="submit">
