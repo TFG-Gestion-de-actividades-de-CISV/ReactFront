@@ -26,10 +26,16 @@ const RegistrationRequests = () => {
   }, []);
 
   // Llamada a la API para aceptar al usuario
+  // setUsers(users.filter((user) => user.email !== userEmail));
+
   const handleAccept = (userEmail) => {
-    fetch(`http://localhost:8000/web_user/accept/${userEmail}`, {
+    fetch(`http://localhost:8000/web_user/acept_request/`, {
       method: "POST",
       credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email: userEmail }),
     })
       .then((response) => response.json())
       .then((data) => {
