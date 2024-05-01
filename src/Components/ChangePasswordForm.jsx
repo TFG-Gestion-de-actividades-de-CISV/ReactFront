@@ -1,9 +1,16 @@
-import { Button, TextField, Typography, Grid, Switch } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const LoginForm = () => {
+const ChangePasswordForm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -13,7 +20,7 @@ const LoginForm = () => {
     handleSubmit,
   } = useForm();
 
-  const url = "http://localhost:8000/web_user/login/";
+  const url = "http://localhost:8000/web_user/change_password/";
 
   function onSubmit(data) {
     fetch(url, {
@@ -28,12 +35,12 @@ const LoginForm = () => {
         if (response.ok) {
           response.json().then((data) => {
             console.log(data);
-            navigate("/admin/main");
+            navigate("/");
           });
-        } else if (response.status === 404) {
-          setErrorMessage("Email o contraseña incorrectas");
         } else {
-          console.log("La respuesta del servidor no fue OK");
+          response.json().then((data) => {
+            setErrorMessage(data.error);
+          });
         }
       })
       .catch((error) => {
@@ -47,8 +54,8 @@ const LoginForm = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
           <Grid item xs={12}>
-            <Typography variant="h2" align="center">
-              Login
+            <Typography variant="h3" align="center">
+              Cambiar contraseña
             </Typography>
           </Grid>
 
@@ -70,44 +77,39 @@ const LoginForm = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Password"
+              label="Contraseña actual"
               required
               size="small"
               type="password"
               fullWidth
-              {...register("password")}
+              {...register("password_old")}
             />
           </Grid>
 
           <Grid item xs={12}>
-            <Link to="/change_password">
-              <Button color="primary" size="small">
-                Forgot password?
-              </Button>
-            </Link>
+            <TextField
+              label="Contraseña nueva"
+              required
+              size="small"
+              type="password"
+              fullWidth
+              {...register("password_new")}
+            />
           </Grid>
 
           {errorMessage && (
             <Grid item xs={12}>
-              <Typography color="error">{errorMessage}</Typography>
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {errorMessage}
+              </Alert>
             </Grid>
           )}
 
           <Grid item xs={12}>
             <Button variant="outlined" type="submit">
-              Login
+              Cambiar contraseña
             </Button>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Typography variant="p">
-              ¿No tienes una cuenta?{" "}
-              <Link to="/signup">
-                <Button color="primary" size="small">
-                  Registrate
-                </Button>
-              </Link>
-            </Typography>
           </Grid>
         </Grid>
       </form>
@@ -115,4 +117,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default ChangePasswordForm;
