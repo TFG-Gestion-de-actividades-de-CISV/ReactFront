@@ -5,6 +5,7 @@ import MainPageView from "./Views/MainPageView";
 import LoginView from "./Views/LoginView";
 import SignupView from "./Views/SignupView";
 import AdminMainView from "./Views/AdminMainView";
+import ChangePasswordView from "./Views/ChangePasswordView";
 
 import "./index.css";
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/login" element={<LoginView />} />
       <Route path="/signup" element={<SignupView />} />
       <Route path="/admin/main" element={<AdminMainView />} />
+      <Route path="/change_password" element={<ChangePasswordView />} />
     </Routes>
   </Router>
 );
