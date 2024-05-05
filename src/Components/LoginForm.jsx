@@ -1,4 +1,12 @@
-import { Button, TextField, Typography, Grid, Switch } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Switch,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -89,7 +97,10 @@ const LoginForm = () => {
 
           {errorMessage && (
             <Grid item xs={12}>
-              <Typography color="error">{errorMessage}</Typography>
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {errorMessage}
+              </Alert>
             </Grid>
           )}
 
