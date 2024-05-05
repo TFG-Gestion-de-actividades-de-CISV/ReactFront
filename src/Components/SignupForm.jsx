@@ -1,4 +1,12 @@
-import { Button, TextField, Typography, Grid, Switch } from "@mui/material";
+import {
+  Button,
+  TextField,
+  Typography,
+  Grid,
+  Switch,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
@@ -10,8 +18,16 @@ const RegisterForm = () => {
     handleSubmit,
   } = useForm();
 
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
   const url = "http://localhost:8000/web_user/register/";
   function onSubmit(data) {
+    if (data.password !== data.repeat_password) {
+      setErrorMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
     const profileData = {
       name: data.name,
       surname: data.surname,
@@ -35,9 +51,34 @@ const RegisterForm = () => {
       },
       body: JSON.stringify(userData),
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
+      .then((response) => {
+        if (response.ok) {
+          response.json().then((data) => {
+            setSuccessMessage("Registro exitoso!");
+            setErrorMessage(null);
+          });
+        } else {
+          response.json().then((data) => {
+            if (data.Error.email) {
+              setErrorMessage(data.Error.email);
+              setSuccessMessage(null);
+            } else if (data.Error.profile) {
+              if (data.Error.profile.postal_code) {
+                setErrorMessage(data.Error.profile.postal_code);
+                setSuccessMessage(null);
+              } else if (data.Error.profile.phone) {
+                setErrorMessage(data.Error.profile.phone);
+                setSuccessMessage(null);
+              }
+            }
+          });
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        setErrorMessage("Ha ocurrido un error. Por favor, inténtalo de nuevo.");
+        setSuccessMessage(null);
+      });
   }
   const [alergias, setAlergias] = useState(false);
   const [familiares, setFamiliares] = useState(false);
@@ -162,6 +203,7 @@ const RegisterForm = () => {
               type="password"
               fullWidth
               required
+              {...register("repeat_password")}
             />
           </Grid>
 
@@ -217,6 +259,24 @@ const RegisterForm = () => {
               />
             )}
           </Grid>
+
+          {successMessage && (
+            <Grid item xs={12}>
+              <Alert severity="success">
+                <AlertTitle>Éxito</AlertTitle>
+                {successMessage}
+              </Alert>
+            </Grid>
+          )}
+
+          {errorMessage && (
+            <Grid item xs={12}>
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                {errorMessage}
+              </Alert>
+            </Grid>
+          )}
 
           <Grid item xs={12}>
             <Button variant="outlined" type="submit">
