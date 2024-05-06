@@ -41,14 +41,22 @@ const App = () => {
         <Route
           path="/admin/main"
           element={
-            isLogged && isAdmin ? <AdminMainView /> : <Navigate to="/" />
+            isLogged && isAdmin ? (
+              <AdminMainView onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
           }
         />
 
         <Route
           path="/user/main"
           element={
-            isLogged && !isAdmin ? <UserMainView /> : <Navigate to="/" />
+            isLogged && !isAdmin ? (
+              <UserMainView onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/" />
+            )
           }
         />
       </Routes>
