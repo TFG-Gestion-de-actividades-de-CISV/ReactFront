@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "@mui/material";
 import LoginForm from "../Components/LoginForm";
 
-const LoginView = () => {
+const LoginView = ({ onLogin }) => {
   return (
     <>
       <Container
@@ -13,7 +13,7 @@ const LoginView = () => {
           alignItems: "center",
         }}
       >
-        <LoginForm />
+        <LoginForm onLogin={onLogin} />
       </Container>
     </>
   );

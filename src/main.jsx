@@ -1,22 +1,61 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import MainPageView from "./Views/MainPageView";
 import LoginView from "./Views/LoginView";
 import SignupView from "./Views/SignupView";
 import AdminMainView from "./Views/AdminMainView";
 import ChangePasswordView from "./Views/ChangePasswordView";
+import UserMainView from "./Views/UserMainView";
 
 import "./index.css";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <Router>
-    <Routes>
-      <Route path="/" element={<MainPageView />} />
-      <Route path="/login" element={<LoginView />} />
-      <Route path="/signup" element={<SignupView />} />
-      <Route path="/admin/main" element={<AdminMainView />} />
-      <Route path="/change_password" element={<ChangePasswordView />} />
-    </Routes>
-  </Router>
-);
+const App = () => {
+  const [isLogged, setIsLoggedIn] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleLogin = (isAdmin) => {
+    setIsLoggedIn(true);
+    setIsAdmin(isAdmin);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setIsAdmin(false);
+  };
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainPageView />} />
+        <Route path="/login" element={<LoginView onLogin={handleLogin} />} />
+        <Route path="/signup" element={<SignupView />} />
+        <Route path="/change_password" element={<ChangePasswordView />} />
+
+        <Route
+          path="/admin/main"
+          element={
+            isLogged && isAdmin ? <AdminMainView /> : <Navigate to="/" />
+          }
+        />
+
+        <Route
+          path="/user/main"
+          element={
+            isLogged && !isAdmin ? <UserMainView /> : <Navigate to="/" />
+          }
+        />
+      </Routes>
+    </Router>
+  );
+};
+
+createRoot(document.getElementById("root")).render(<App />);
+
+//ReactDOM.render(<App />, document.getElementById("root"));
