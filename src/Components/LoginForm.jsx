@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const LoginForm = () => {
+const LoginForm = ({ onLogin }) => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -36,7 +36,12 @@ const LoginForm = () => {
         if (response.ok) {
           response.json().then((data) => {
             console.log(data);
-            navigate("/admin/main");
+            if (data.is_admin) {
+              navigate("/admin/main");
+            } else {
+              navigate("/user/main");
+            }
+            onLogin(data.is_admin);
           });
         } else if (response.status === 404) {
           setErrorMessage("Email o contraseña incorrectas");
