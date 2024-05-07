@@ -9,7 +9,7 @@ const AdminMainView = ({ onLogout }) => {
   return (
     <>
       <Typography>Admin Main View</Typography>
-      {/*<LogoutButton onLogout={onLogout} />*/}
+      <LogoutButton onLogout={onLogout} />
 
       <Link to="/admin/new_actividad">
         <Button variant="outlined"> Crear nueva actividad</Button>
