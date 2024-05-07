@@ -13,6 +13,7 @@ import SignupView from "./Views/SignupView";
 import AdminMainView from "./Views/AdminMainView";
 import ChangePasswordView from "./Views/ChangePasswordView";
 import UserMainView from "./Views/UserMainView";
+import CreateActividadView from "./Views/CreateActividadView";
 
 import "./index.css";
 
@@ -38,7 +39,7 @@ const App = () => {
         <Route path="/signup" element={<SignupView />} />
         <Route path="/change_password" element={<ChangePasswordView />} />
 
-        <Route
+        {/*        <Route
           path="/admin/main"
           element={
             isLogged && isAdmin ? (
@@ -48,6 +49,16 @@ const App = () => {
             )
           }
         />
+
+        <Route
+          path="/admin/new_actividad"
+          element={
+            isLogged && isAdmin ? <CreateActividadView /> : <Navigate to="/" />
+          }
+        /> */}
+
+        <Route path="/admin/new_actividad" element={<CreateActividadView />} />
+        <Route path="/admin/main" element={<AdminMainView />} />
 
         <Route
           path="/user/main"
