@@ -65,6 +65,16 @@ const CreateActividadForm = () => {
               Nueva Actividad
             </Typography>
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label="Nombre de actividad"
+              required
+              size="small"
+              type="text"
+              fullWidth
+              {...register("name")}
+            />
+          </Grid>
 
           <Grid item xs={12}>
             <TextField
@@ -131,6 +141,7 @@ const CreateActividadForm = () => {
               required
               size="small"
               type="text"
+              multiline
               fullWidth
               {...register("packing_list")}
             />
@@ -141,7 +152,9 @@ const CreateActividadForm = () => {
               label="Reunión familias"
               size="small"
               type="text"
+              multiline
               fullWidth
+              {...register("family_reunion")}
             />
           </Grid>
 

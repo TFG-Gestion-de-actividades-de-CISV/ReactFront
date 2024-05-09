@@ -39,7 +39,7 @@ const App = () => {
         <Route path="/signup" element={<SignupView />} />
         <Route path="/change_password" element={<ChangePasswordView />} />
 
-        {/*        <Route
+        <Route
           path="/admin/main"
           element={
             isLogged && isAdmin ? (
@@ -55,7 +55,7 @@ const App = () => {
           element={
             isLogged && isAdmin ? <CreateActividadView /> : <Navigate to="/" />
           }
-        /> */}
+        />
 
         <Route path="/admin/new_actividad" element={<CreateActividadView />} />
         <Route path="/admin/main" element={<AdminMainView />} />
