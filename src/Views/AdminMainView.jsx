@@ -3,9 +3,12 @@ import { Button, Typography } from "@mui/material";
 import RegistrationRequests from "../Components/RegistrationRequests";
 import LogoutButton from "../Components/LogoutButton";
 import { Link } from "react-router-dom";
+import ListActivities from "../Components/ListActivities";
 
 const AdminMainView = ({ onLogout }) => {
   const [showRequests, setShowRequests] = useState(false);
+  const [showActivities, setActivities] = useState(false);
+
   return (
     <>
       <Typography>Admin Main View</Typography>
@@ -19,6 +22,11 @@ const AdminMainView = ({ onLogout }) => {
         Show Registration Requests
       </Button>
       {showRequests && <RegistrationRequests />}
+
+      <Button onClick={() => setActivities(!showActivities)}>
+        Show Activites
+      </Button>
+      {showActivities && <ListActivities />}
     </>
   );
 };
