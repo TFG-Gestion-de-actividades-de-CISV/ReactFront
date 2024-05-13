@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { createRoot } from "react-dom/client";
 import {
@@ -17,6 +17,25 @@ import CreateActividadView from "./Views/CreateActividadView";
 
 import "./index.css";
 
+const ProtectedRouteAdmin = ({ children }) => {
+  const isLogged = localStorage.getItem("isLogged") === "true";
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
+
+  if (!isLogged || !isAdmin) {
+    return <Navigate to="/" />;
+  }
+  return children;
+};
+
+const ProtectedRouteUser = ({ children }) => {
+  const isLogged = localStorage.getItem("isLogged") === "true";
+
+  if (!isLogged) {
+    return <Navigate to="/" />;
+  }
+  return children;
+};
+
 const App = () => {
   const [isLogged, setIsLoggedIn] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -24,12 +43,26 @@ const App = () => {
   const handleLogin = (isAdmin) => {
     setIsLoggedIn(true);
     setIsAdmin(isAdmin);
+    localStorage.setItem("isLogged", "true");
+    localStorage.setItem("isAdmin", isAdmin ? "true" : "false");
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
     setIsAdmin(false);
+    localStorage.removeItem("isLogged");
+    localStorage.removeItem("isAdmin");
   };
+
+  useEffect(() => {
+    const logged = localStorage.getItem("isLogged");
+    const admin = localStorage.getItem("isAdmin");
+
+    if (logged === "true") {
+      setIsLoggedIn(true);
+      setIsAdmin(admin === "true");
+    }
+  }, []);
 
   return (
     <Router>
@@ -42,32 +75,27 @@ const App = () => {
         <Route
           path="/admin/main"
           element={
-            isLogged && isAdmin ? (
+            <ProtectedRouteAdmin>
               <AdminMainView onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
+            </ProtectedRouteAdmin>
           }
         />
 
         <Route
           path="/admin/new_actividad"
           element={
-            isLogged && isAdmin ? <CreateActividadView /> : <Navigate to="/" />
+            <ProtectedRouteAdmin>
+              <CreateActividadView onLogout={handleLogout} />
+            </ProtectedRouteAdmin>
           }
         />
 
-        <Route path="/admin/new_actividad" element={<CreateActividadView />} />
-        <Route path="/admin/main" element={<AdminMainView />} />
-
         <Route
-          path="/user/main"
+          path="/admin/new_actividad"
           element={
-            isLogged && !isAdmin ? (
+            <ProtectedRouteUser>
               <UserMainView onLogout={handleLogout} />
-            ) : (
-              <Navigate to="/" />
-            )
+            </ProtectedRouteUser>
           }
         />
       </Routes>
@@ -76,5 +104,3 @@ const App = () => {
 };
 
 createRoot(document.getElementById("root")).render(<App />);
-
-//ReactDOM.render(<App />, document.getElementById("root"));
