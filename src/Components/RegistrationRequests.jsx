@@ -26,8 +26,6 @@ const RegistrationRequests = () => {
   }, []);
 
   // Llamada a la API para aceptar al usuario
-  // setUsers(users.filter((user) => user.email !== userEmail));
-
   const handleAccept = (userEmail) => {
     fetch(`http://localhost:8000/web_user/acept_request/`, {
       method: "POST",
@@ -74,19 +72,23 @@ const RegistrationRequests = () => {
         <Card key={user.email} sx={{ marginBottom: 5 }}>
           <CardContent>
             <Typography variant="h5">
-              {user.profile.name} {user.profile.surname}
-              {user.profile.second_surname}
+              {user.profile.name} {user.profile.surnames}
             </Typography>
             <Typography variant="subtitle1">{user.email}</Typography>
-            <Typography variant="body2">Ciudad: {user.profile.city}</Typography>
             <Typography variant="body2">
-              Código Postal: {user.profile.postal_code}
+              <b>Ciudad:</b> {user.profile.city}
             </Typography>
             <Typography variant="body2">
-              Teléfono: {user.profile.phone}
+              <b>Código Postal: </b>
+              {user.profile.postal_code}
             </Typography>
             <Typography variant="body2">
-              Fecha de Nacimiento: {user.profile.birthdate}
+              <b> Teléfono: </b>
+              {user.profile.phone}
+            </Typography>
+            <Typography variant="body2">
+              <b>Fecha de Nacimiento: </b>
+              {user.profile.birthdate}
             </Typography>
             <TextField
               label="Razón del rechazo"
@@ -110,6 +112,7 @@ const RegistrationRequests = () => {
               variant="contained"
               color="error"
               onClick={() => handleReject(user.email)}
+              disabled={!reasons[user.email]}
             >
               Rechazar
             </Button>

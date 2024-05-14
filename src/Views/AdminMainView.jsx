@@ -1,33 +1,51 @@
 import React, { useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
 import RegistrationRequests from "../Components/RegistrationRequests";
 import LogoutButton from "../Components/LogoutButton";
 import { Link } from "react-router-dom";
 import ListActivities from "../Components/ListActivities";
+import { useNavigate } from "react-router-dom";
 
 const AdminMainView = ({ onLogout }) => {
-  const [showRequests, setShowRequests] = useState(false);
-  const [showActivities, setActivities] = useState(false);
+  const [activeComponent, setActiveComponent] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleActivityClick = (id) => {
+    navigate(`/admin/activity/${id}`);
+  };
 
   return (
-    <>
-      <Typography>Admin Main View</Typography>
-      <LogoutButton onLogout={onLogout} />
+    <Box display="flex">
+      <Box
+        minWidth={200}
+        p={2}
+        borderRight={1}
+        display="flex"
+        flexDirection="column"
+      >
+        <Link to="/admin/new_actividad">
+          <Button variant="outlined"> Crear nueva actividad</Button>
+        </Link>
 
-      <Link to="/admin/new_actividad">
-        <Button variant="outlined"> Crear nueva actividad</Button>
-      </Link>
+        <Button onClick={() => setActiveComponent("requests")}>
+          Solicitudes de registro
+        </Button>
 
-      <Button onClick={() => setShowRequests(!showRequests)}>
-        Show Registration Requests
-      </Button>
-      {showRequests && <RegistrationRequests />}
+        <Button onClick={() => setActiveComponent("activities")}>
+          Actividades
+        </Button>
 
-      <Button onClick={() => setActivities(!showActivities)}>
-        Show Activites
-      </Button>
-      {showActivities && <ListActivities />}
-    </>
+        <LogoutButton onLogout={onLogout} />
+      </Box>
+
+      <Box p={2} flexGrow={1}>
+        {activeComponent === "requests" && <RegistrationRequests />}
+        {activeComponent === "activities" && (
+          <ListActivities onActivityClick={handleActivityClick} />
+        )}
+      </Box>
+    </Box>
   );
 };
 

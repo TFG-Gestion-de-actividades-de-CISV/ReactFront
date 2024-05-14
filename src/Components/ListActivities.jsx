@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Card, CardContent } from "@mui/material";
 
-const ListActivities = () => {
+const ListActivities = ({ onActivityClick }) => {
   const [activities, setActivities] = useState([]);
 
   const url = "http://localhost:8000/activities/all_activities";
@@ -22,27 +22,34 @@ const ListActivities = () => {
         Actividades
       </Typography>
       {activities.map((activity) => (
-        <Card key={activity.id} sx={{ marginBottom: 5 }}>
+        <Card
+          key={activity.id}
+          sx={{ marginBottom: 5 }}
+          onClick={() => onActivityClick(activity.id)}
+        >
           <CardContent>
             <Typography variant="h5"> {activity.name}</Typography>
             <Typography variant="body2">
-              Dirección: {activity.adress}
+              <b>Dirección:</b> {activity.adress}
             </Typography>
             <Typography variant="body2">
-              Fecha de inicio: {activity.date_start}
+              <b>Fecha de inicio:</b> {activity.date_start}
             </Typography>
             <Typography variant="body2">
-              Fecha de final: {activity.date_end}
+              <b>Fecha de final:</b> {activity.date_end}
             </Typography>
             <Typography variant="body2">
-              Hora de inicio: {activity.hours_start}
-            </Typography>
-            <Typography variant="body2">Precio: {activity.price}</Typography>
-            <Typography variant="body2">
-              Lista de embalaje: {activity.packing_list}
+              <b>Hora de inicio:</b> {activity.hours_start}
             </Typography>
             <Typography variant="body2">
-              Reunión familias: {activity.family_reunion}
+              <b>Precio:</b> {activity.price}
+            </Typography>
+            <Typography variant="body2">
+              <b>Lista de embalaje:</b>
+              {activity.packing_list}
+            </Typography>
+            <Typography variant="body2">
+              <b>Reunión familias:</b> {activity.family_reunion}
             </Typography>
           </CardContent>
         </Card>
