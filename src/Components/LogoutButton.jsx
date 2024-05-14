@@ -23,7 +23,11 @@ const LogoutButton = ({ onLogout }) => {
       });
   };
 
-  return <Button onClick={handleLogout}> Logout</Button>;
+  return (
+    <Button variant="contained" size="small" onClick={handleLogout}>
+      Logout
+    </Button>
+  );
 };
 
 export default LogoutButton;

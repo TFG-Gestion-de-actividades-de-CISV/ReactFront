@@ -30,8 +30,7 @@ const RegisterForm = () => {
 
     const profileData = {
       name: data.name,
-      surname: data.surname,
-      second_surname: data.second_surname,
+      surnames: data.surnames,
       city: data.city,
       postal_code: data.postal_code,
       phone: data.phone,
@@ -110,26 +109,17 @@ const RegisterForm = () => {
               {...register("name")}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={8}>
             <TextField
-              label="Primer apellido"
+              label="Apellidos"
               size="small"
               type="text"
               fullWidth
               required
-              {...register("surname")}
+              {...register("surnames")}
             />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <TextField
-              label="Segundo apellido"
-              size="small"
-              type="text"
-              fullWidth
-              required
-              {...register("second_surname")}
-            />
-          </Grid>
+
           <Grid item xs={12} md={4}>
             <Typography variant="h6">Fecha de nacimiento</Typography>
           </Grid>

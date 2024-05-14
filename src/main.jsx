@@ -14,8 +14,10 @@ import AdminMainView from "./Views/AdminMainView";
 import ChangePasswordView from "./Views/ChangePasswordView";
 import UserMainView from "./Views/UserMainView";
 import CreateActividadView from "./Views/CreateActividadView";
+import UserActivityView from "./Views/UserActivityView";
 
 import "./index.css";
+import AdminActivityView from "./Views/AdminActivityView";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const isLogged = localStorage.getItem("isLogged") === "true";
@@ -91,10 +93,28 @@ const App = () => {
         />
 
         <Route
-          path="/admin/new_actividad"
+          path="/admin/activity/:id"
+          element={
+            <ProtectedRouteAdmin>
+              <AdminActivityView />
+            </ProtectedRouteAdmin>
+          }
+        />
+
+        <Route
+          path="/user/main"
           element={
             <ProtectedRouteUser>
-              <UserMainView onLogout={handleLogout} />
+              <UserMainView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id"
+          element={
+            <ProtectedRouteUser>
+              <UserActivityView />
             </ProtectedRouteUser>
           }
         />
