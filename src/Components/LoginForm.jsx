@@ -21,7 +21,7 @@ const LoginForm = ({ onLogin }) => {
     handleSubmit,
   } = useForm();
 
-  const url = "http://localhost:8000/web_user/login/";
+  const url = "http://172.26.8.5:8000/web_user/login/";
 
   function onSubmit(data) {
     fetch(url, {
