@@ -23,6 +23,15 @@ const RegisterForm = () => {
 
   const url = "http://localhost:8000/web_user/register/";
   function onSubmit(data) {
+    const passwordValidation =
+      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    if (!passwordValidation.test(data.password)) {
+      setErrorMessage(
+        "La contraseña debe contener al menos una letra mayúscula, un número, un símbolo y tener al menos 8 caracteres de longitud."
+      );
+      return;
+    }
     if (data.password !== data.repeat_password) {
       setErrorMessage("Las contraseñas no coinciden.");
       return;
