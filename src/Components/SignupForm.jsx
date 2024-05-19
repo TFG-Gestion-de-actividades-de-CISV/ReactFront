@@ -199,34 +199,6 @@ const RegisterForm = () => {
 
           <Grid item md={6}>
             <Typography variant="h6">
-              ¿Tiene alergias / restricciones alimenticias?
-            </Typography>
-          </Grid>
-
-          <Grid item md={6}>
-            <Switch
-              checked={alergias}
-              onChange={handleSwitchAlergiasChange}
-              color="primary"
-            ></Switch>
-          </Grid>
-
-          <Grid item xs={12}>
-            {alergias && (
-              <TextField
-                label="Alergias / restricciones alimenticias"
-                size="small"
-                type="text"
-                fullWidth
-                multiline
-                minRows={3}
-                maxRows={6}
-              />
-            )}
-          </Grid>
-
-          <Grid item md={6}>
-            <Typography variant="h6">
               ¿Tiene algún familiar registrado?
             </Typography>
           </Grid>
