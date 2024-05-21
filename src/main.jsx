@@ -87,7 +87,7 @@ const App = () => {
           path="/admin/new_actividad"
           element={
             <ProtectedRouteAdmin>
-              <CreateActividadView onLogout={handleLogout} />
+              <CreateActividadView />
             </ProtectedRouteAdmin>
           }
         />
@@ -105,7 +105,7 @@ const App = () => {
           path="/user/main"
           element={
             <ProtectedRouteUser>
-              <UserMainView />
+              <UserMainView onLogout={handleLogout} />
             </ProtectedRouteUser>
           }
         />
