@@ -8,30 +8,31 @@ import {
   Alert,
   AlertTitle,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 
-const NinosInscriptionForm = () => {
+const NinosInscriptionForm = ({ activity }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    control,
+    reset,
+  } = useForm({
+    defaultValues: {
+      allergy: "",
+      cisv_authorization: false,
+      emergency_phone: "",
+      t_shirt_size: "",
+      medicines: "",
+    },
+  });
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const [formData, setFormData] = useState({
-    allergy: "",
-    cisv_authorization: false,
-    emergency_phone: "",
-    t_shirt_size: "",
-    medicines: "",
-  });
-
   const url = "http://localhost:8000/activities/ninos_inscription/";
 
   useEffect(() => {
-    // Reemplaza 'role' con el rol correspondiente y asegúrate de que la URL sea correcta
     const getOrCreateUrl =
       "http://localhost:8000/activities/get_or_create_inscription/ninos";
 
@@ -45,17 +46,19 @@ const NinosInscriptionForm = () => {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          // Si hay datos, actualiza el estado del formulario
-          setFormData(data);
+          // Si hay datos, actualiza los valores del formulario
+          reset(data);
         }
       })
       .catch((error) => {
         console.error("Error al obtener la inscripción:", error);
       });
-  }, []);
+  }, [reset]);
 
   const onSubmit = (data) => {
-    data["activity"] = "1";
+    data["activity"] = activity;
+
+    console.log(data);
 
     fetch(url, {
       method: "POST",
@@ -73,6 +76,7 @@ const NinosInscriptionForm = () => {
           });
         } else {
           response.json().then((data) => {
+            console.log(data);
             setErrorMessage(data.error);
             setSuccessMessage(null);
           });
@@ -89,32 +93,20 @@ const NinosInscriptionForm = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
-          <Grid item xs={12}>
-            <Typography variant="h3" align="center">
-              Inscripción de Niños
-            </Typography>
-          </Grid>
-
           <Grid item xs={12} md={6}>
-            <TextField
-              label="Alergias"
-              size="small"
-              type="text"
-              fullWidth
-              value={formData.allergy}
-              {...register("allergy")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Typography variant="h6">¿Autorización de CISV?</Typography>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Switch
-              value={formData.cisv_authorization}
-              {...register("cisv_authorization")}
-              color="primary"
+            <Controller
+              name="allergy"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Alergias"
+                  size="small"
+                  type="text"
+                  fullWidth
+                  focused
+                />
+              )}
             />
           </Grid>
 
@@ -124,8 +116,7 @@ const NinosInscriptionForm = () => {
               size="small"
               type="text"
               fullWidth
-              required
-              value={formData.emergency_phone}
+              focused
               {...register("emergency_phone")}
             />
           </Grid>
@@ -137,7 +128,7 @@ const NinosInscriptionForm = () => {
               type="text"
               fullWidth
               required
-              value={formData.t_shirt_size}
+              focused
               {...register("t_shirt_size")}
             />
           </Grid>
@@ -148,8 +139,20 @@ const NinosInscriptionForm = () => {
               size="small"
               type="text"
               fullWidth
-              value={formData.medicines}
+              focused
               {...register("medicines")}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">¿Autorización de CISV?</Typography>
+
+            <Controller
+              name="cisv_authorization"
+              control={control}
+              render={({ field }) => (
+                <Switch {...field} checked={field.value} color="primary" />
+              )}
             />
           </Grid>
 
