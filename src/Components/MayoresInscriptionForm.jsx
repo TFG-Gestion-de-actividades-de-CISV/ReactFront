@@ -76,9 +76,13 @@ const MayoresInscriptionForm = ({ activity }) => {
           });
         } else {
           response.json().then((data) => {
-            console.log(data);
-            setErrorMessage(data.error);
-            setSuccessMessage(null);
+            if (data.error.emergency_phone) {
+              setErrorMessage(data.error.emergency_phone);
+              setSuccessMessage(null);
+            } else {
+              setErrorMessage(data.error);
+              setSuccessMessage(null);
+            }
           });
         }
       })
@@ -117,6 +121,7 @@ const MayoresInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               focused
+              required
               {...register("emergency_phone")}
             />
           </Grid>
@@ -140,6 +145,7 @@ const MayoresInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               focused
+              required
               {...register("medicines")}
             />
           </Grid>
@@ -150,6 +156,7 @@ const MayoresInscriptionForm = ({ activity }) => {
             <Controller
               name="cisv_authorization"
               control={control}
+              required
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />
               )}

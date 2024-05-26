@@ -76,9 +76,13 @@ const NinosInscriptionForm = ({ activity }) => {
           });
         } else {
           response.json().then((data) => {
-            console.log(data);
-            setErrorMessage(data.error);
-            setSuccessMessage(null);
+            if (data.error.emergency_phone) {
+              setErrorMessage(data.error.emergency_phone);
+              setSuccessMessage(null);
+            } else {
+              setErrorMessage(data.error);
+              setSuccessMessage(null);
+            }
           });
         }
       })
@@ -117,6 +121,7 @@ const NinosInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               focused
+              required
               {...register("emergency_phone")}
             />
           </Grid>
@@ -139,6 +144,7 @@ const NinosInscriptionForm = ({ activity }) => {
               size="small"
               type="text"
               fullWidth
+              required
               focused
               {...register("medicines")}
             />
@@ -149,6 +155,7 @@ const NinosInscriptionForm = ({ activity }) => {
 
             <Controller
               name="cisv_authorization"
+              required
               control={control}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />

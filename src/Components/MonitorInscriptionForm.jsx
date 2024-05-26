@@ -21,6 +21,7 @@ const MonitorInscriptionForm = ({ activity }) => {
     defaultValues: {
       dni: "",
       languages: "",
+      allergy: "",
       cisv_authorization: false,
       emergency_phone: "",
       t_shirt_size: "",
@@ -77,9 +78,13 @@ const MonitorInscriptionForm = ({ activity }) => {
           });
         } else {
           response.json().then((data) => {
-            console.log(data);
-            setErrorMessage(data.error);
-            setSuccessMessage(null);
+            if (data.error.emergency_phone) {
+              setErrorMessage(data.error.emergency_phone);
+              setSuccessMessage(null);
+            } else {
+              setErrorMessage(data.error);
+              setSuccessMessage(null);
+            }
           });
         }
       })
@@ -105,6 +110,7 @@ const MonitorInscriptionForm = ({ activity }) => {
                   size="small"
                   type="text"
                   fullWidth
+                  required
                   focused
                 />
               )}
@@ -118,10 +124,11 @@ const MonitorInscriptionForm = ({ activity }) => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="Lenguas"
+                  label="Idiomas"
                   size="small"
                   type="text"
                   fullWidth
+                  required
                   focused
                 />
               )}
@@ -151,6 +158,7 @@ const MonitorInscriptionForm = ({ activity }) => {
               size="small"
               type="text"
               fullWidth
+              required
               focused
               {...register("emergency_phone")}
             />
@@ -174,6 +182,7 @@ const MonitorInscriptionForm = ({ activity }) => {
               size="small"
               type="text"
               fullWidth
+              required
               focused
               {...register("medicines")}
             />
@@ -184,6 +193,7 @@ const MonitorInscriptionForm = ({ activity }) => {
 
             <Controller
               name="cisv_authorization"
+              required
               control={control}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />
