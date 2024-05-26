@@ -21,7 +21,8 @@ const LoginForm = ({ onLogin }) => {
     handleSubmit,
   } = useForm();
 
-  const url = "http://172.26.8.5:8000/web_user/login/";
+  //const url = "http://172.26.8.5:8000/web_user/login/";
+  const url = "http://localhost:8000/web_user/login/";
 
   function onSubmit(data) {
     fetch(url, {
@@ -117,7 +118,7 @@ const LoginForm = ({ onLogin }) => {
 
           <Grid item xs={12}>
             <Typography variant="p">
-              ¿No tienes una cuenta?{" "}
+              ¿No tienes una cuenta?
               <Link to="/signup">
                 <Button color="primary" size="small">
                   Registrate

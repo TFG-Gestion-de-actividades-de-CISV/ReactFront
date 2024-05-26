@@ -28,6 +28,7 @@ const CreateActividadForm = () => {
   function onSubmit(data) {
     fetch(url, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
@@ -38,15 +39,6 @@ const CreateActividadForm = () => {
           response.json().then((data) => {
             setSuccessMessage("Actividad creada exitosamente");
             setErrorMessage(null);
-          });
-        } else {
-          response.json().then((data) => {
-            if (data.Error.date_start) {
-              setSuccessMessage(null);
-              setErrorMessage(
-                "La fecha de inicio debe ser anterior a la fecha de fin"
-              );
-            }
           });
         }
       })
