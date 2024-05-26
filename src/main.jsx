@@ -20,6 +20,7 @@ import "./index.css";
 import AdminActivityView from "./Views/AdminActivityView";
 import NinosInscriptionView from "./Views/NinosInscriptionView";
 import MayoresInscriptionView from "./Views/MayoresInscriptionView";
+import MonitorInscriptionView from "./Views/MonitorInscriptionView";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const isLogged = localStorage.getItem("isLogged") === "true";
@@ -135,6 +136,15 @@ const App = () => {
           element={
             <ProtectedRouteUser>
               <MayoresInscriptionView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id/monitor"
+          element={
+            <ProtectedRouteUser>
+              <MonitorInscriptionView />
             </ProtectedRouteUser>
           }
         />

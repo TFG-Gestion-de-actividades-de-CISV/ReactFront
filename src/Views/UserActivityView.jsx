@@ -13,7 +13,9 @@ const UserActivityView = () => {
   const handleMayoresClick = () => {
     navigate(`/user/activity/${id}/mayores`);
   };
-
+  const handleMonitorClick = () => {
+    navigate(`/user/activity/${id}/monitor`);
+  };
   return (
     <>
       <Container maxWidth="sm">
@@ -35,7 +37,9 @@ const UserActivityView = () => {
             Mayor (16-17 años)
           </Button>
           <Button sx={{ m: 1 }}> Líder (21+ años)</Button>
-          <Button sx={{ m: 1 }}> Monitor (18-20 años)</Button>
+          <Button onClick={handleMonitorClick} sx={{ m: 1 }}>
+            Monitor (18-20 años)
+          </Button>
           <Button sx={{ m: 1 }}> Padre / madre / tutor</Button>
         </Box>
       </Container>
