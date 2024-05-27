@@ -21,7 +21,7 @@ const LoginForm = ({ onLogin }) => {
     handleSubmit,
   } = useForm();
 
-  const url = "http:/http://15.237.251.169/web_user/login/";
+  const url = "http://15.237.251.169/web_user/login/";
 
   function onSubmit(data) {
     fetch(url, {
