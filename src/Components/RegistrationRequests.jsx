@@ -8,6 +8,7 @@ import {
   Button,
   TextField,
 } from "@mui/material";
+import config from "../config";
 
 const RegistrationRequests = () => {
   const [users, setUsers] = useState([]);

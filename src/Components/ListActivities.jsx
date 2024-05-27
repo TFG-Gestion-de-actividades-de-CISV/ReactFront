@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Card, CardContent } from "@mui/material";
+import config from "../config";
 
 const ListActivities = ({ onActivityClick }) => {
   const [activities, setActivities] = useState([]);
