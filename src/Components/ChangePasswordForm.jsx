@@ -21,7 +21,9 @@ const ChangePasswordForm = () => {
     handleSubmit,
   } = useForm();
 
-  const url = `${config.apiUrl}/web_user/change_password/`;
+  //const url = `${config.apiUrl}/web_user/change_password/`;
+
+  const url = `http://15.237.251.169/web_user/change_password/`;
 
   function onSubmit(data) {
     fetch(url, {
