@@ -10,6 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import config from "../config";
 
 const LoginForm = ({ onLogin }) => {
   const navigate = useNavigate();
@@ -21,8 +22,8 @@ const LoginForm = ({ onLogin }) => {
     handleSubmit,
   } = useForm();
 
-  //const url = "http://172.26.8.5:8000/web_user/login/";
-  const url = "http://localhost:8000/web_user/login/";
+
+  const url = `${config.apiUrl}/web_user/login/`;
 
   function onSubmit(data) {
     fetch(url, {

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 const LogoutButton = ({ onLogout }) => {
   const navigate = useNavigate();
 
-  const url = "http://localhost:8000/web_user/logout/";
+  const url = `${config.apiUrl}/web_user/logout/`;
 
   const handleLogout = () => {
     fetch(url, {

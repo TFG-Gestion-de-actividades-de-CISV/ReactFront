@@ -9,6 +9,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import config from "../config";
 
 const ChangePasswordForm = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const ChangePasswordForm = () => {
     handleSubmit,
   } = useForm();
 
-  const url = "http://localhost:8000/web_user/change_password/";
+  const url = `${config.apiUrl}/web_user/change_password/`;
 
   function onSubmit(data) {
     fetch(url, {

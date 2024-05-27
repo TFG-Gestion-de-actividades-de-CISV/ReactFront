@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import config from "../config";
 
 import {
   Grid,
@@ -23,7 +24,7 @@ const CreateActividadForm = () => {
     handleSubmit,
   } = useForm();
 
-  const url = "http://localhost:8000/activities/create_activity/";
+  const url = `${config.apiUrl}/activities/create_activity/`;
 
   function onSubmit(data) {
     fetch(url, {

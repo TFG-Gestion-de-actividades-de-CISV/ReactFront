@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Container, Typography, Card, CardContent } from "@mui/material";
+import config from "../config";
 
 const ListActivities = ({ onActivityClick }) => {
   const [activities, setActivities] = useState([]);
 
-  const url = "http://localhost:8000/activities/all_activities";
+  const url = `${config.apiUrl}/activities/all_activities`;
 
   useEffect(() => {
     fetch(url, {
