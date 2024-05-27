@@ -21,7 +21,7 @@ const RegisterForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const url = "http://localhost:8000/web_user/register/";
+  const url = `${config.apiUrl}/web_user/register/`;
   function onSubmit(data) {
     const passwordValidation =
       /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;

@@ -13,7 +13,7 @@ const RegistrationRequests = () => {
   const [users, setUsers] = useState([]);
   const [reasons, setReasons] = useState({});
 
-  const url = "http://localhost:8000/web_user/registration_requests";
+  const url = `${config.apiUrl}/web_user/registration_requests`;
 
   useEffect(() => {
     fetch(url, {
@@ -27,7 +27,7 @@ const RegistrationRequests = () => {
 
   // Llamada a la API para aceptar al usuario
   const handleAccept = (userEmail) => {
-    fetch(`http://localhost:8000/web_user/acept_request/`, {
+    fetch(`${config.apiUrl}/web_user/acept_request/`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -44,7 +44,7 @@ const RegistrationRequests = () => {
 
   // Llamada a la API para rechazar al usuario
   const handleReject = (userEmail) => {
-    fetch(`http://localhost:8000/web_user/reject_request/`, {
+    fetch(`${config.apiUrl}/web_user/reject_request/`, {
       method: "POST",
       credentials: "include",
       headers: {

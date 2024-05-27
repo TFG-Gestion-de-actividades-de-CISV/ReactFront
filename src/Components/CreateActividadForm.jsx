@@ -23,7 +23,7 @@ const CreateActividadForm = () => {
     handleSubmit,
   } = useForm();
 
-  const url = "http://localhost:8000/activities/create_activity/";
+  const url = `${config.apiUrl}/activities/create_activity/`;
 
   function onSubmit(data) {
     fetch(url, {

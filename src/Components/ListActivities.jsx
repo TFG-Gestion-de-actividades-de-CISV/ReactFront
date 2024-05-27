@@ -4,7 +4,7 @@ import { Container, Typography, Card, CardContent } from "@mui/material";
 const ListActivities = ({ onActivityClick }) => {
   const [activities, setActivities] = useState([]);
 
-  const url = "http://localhost:8000/activities/all_activities";
+  const url = `${config.apiUrl}/activities/all_activities`;
 
   useEffect(() => {
     fetch(url, {
