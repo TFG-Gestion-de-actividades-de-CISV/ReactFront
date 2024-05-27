@@ -18,6 +18,10 @@ import UserActivityView from "./Views/UserActivityView";
 
 import "./index.css";
 import AdminActivityView from "./Views/AdminActivityView";
+import NinosInscriptionView from "./Views/NinosInscriptionView";
+import MayoresInscriptionView from "./Views/MayoresInscriptionView";
+import MonitorInscriptionView from "./Views/MonitorInscriptionView";
+import LiderInscriptionView from "./Views/LiderInscriptionView";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const isLogged = localStorage.getItem("isLogged") === "true";
@@ -87,7 +91,7 @@ const App = () => {
           path="/admin/new_actividad"
           element={
             <ProtectedRouteAdmin>
-              <CreateActividadView onLogout={handleLogout} />
+              <CreateActividadView />
             </ProtectedRouteAdmin>
           }
         />
@@ -105,7 +109,7 @@ const App = () => {
           path="/user/main"
           element={
             <ProtectedRouteUser>
-              <UserMainView />
+              <UserMainView onLogout={handleLogout} />
             </ProtectedRouteUser>
           }
         />
@@ -115,6 +119,42 @@ const App = () => {
           element={
             <ProtectedRouteUser>
               <UserActivityView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id/ninos"
+          element={
+            <ProtectedRouteUser>
+              <NinosInscriptionView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id/mayores"
+          element={
+            <ProtectedRouteUser>
+              <MayoresInscriptionView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id/monitor"
+          element={
+            <ProtectedRouteUser>
+              <MonitorInscriptionView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id/lider"
+          element={
+            <ProtectedRouteUser>
+              <LiderInscriptionView />
             </ProtectedRouteUser>
           }
         />

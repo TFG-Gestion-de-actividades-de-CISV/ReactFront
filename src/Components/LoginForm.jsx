@@ -22,6 +22,7 @@ const LoginForm = ({ onLogin }) => {
     handleSubmit,
   } = useForm();
 
+
   const url = `${config.apiUrl}/web_user/login/`;
 
   function onSubmit(data) {
@@ -118,7 +119,7 @@ const LoginForm = ({ onLogin }) => {
 
           <Grid item xs={12}>
             <Typography variant="p">
-              ¿No tienes una cuenta?{" "}
+              ¿No tienes una cuenta?
               <Link to="/signup">
                 <Button color="primary" size="small">
                   Registrate
