@@ -17,6 +17,7 @@ const NinosInscriptionForm = ({ activity }) => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
     reset,
   } = useForm({
     defaultValues: {
@@ -57,15 +58,19 @@ const NinosInscriptionForm = ({ activity }) => {
   const onSubmit = (data) => {
     data["activity"] = activity;
 
-    console.log(data);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key === "health_card" || key === "pago") {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
 
     fetch(url, {
       method: "POST",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     })
       .then((response) => {
         if (response.ok) {
@@ -155,6 +160,19 @@ const NinosInscriptionForm = ({ activity }) => {
               }}
               {...register("medicines")}
             />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <input
+              type="file"
+              required
+              accept=".pdf"
+              {...register("health_card")}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <input type="file" required accept=".pdf" {...register("pago")} />
           </Grid>
 
           <Grid item xs={12} md={6}>
