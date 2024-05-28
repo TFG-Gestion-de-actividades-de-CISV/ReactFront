@@ -146,6 +146,7 @@ const CreateActividadForm = () => {
               size="small"
               type="text"
               multiline
+              required
               fullWidth
               {...register("family_reunion")}
             />

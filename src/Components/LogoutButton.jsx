@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import config from "../config";
 
 const LogoutButton = ({ onLogout }) => {
   const navigate = useNavigate();
