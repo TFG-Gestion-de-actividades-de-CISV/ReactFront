@@ -9,6 +9,7 @@ import {
   AlertTitle,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import config from "../config";
 
 const LiderInscriptionForm = ({ activity }) => {
   const {
@@ -34,11 +35,10 @@ const LiderInscriptionForm = ({ activity }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const url = "http://localhost:8000/activities/lider_inscription/";
+  const url = `${config.apiUrl}/activities/lider_inscription/`;
 
   useEffect(() => {
-    const getOrCreateUrl =
-      "http://localhost:8000/activities/get_or_create_inscription/lider";
+    const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/lider`;
 
     fetch(getOrCreateUrl, {
       method: "GET",
@@ -113,7 +113,9 @@ const LiderInscriptionForm = ({ activity }) => {
                   type="text"
                   fullWidth
                   required
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               )}
             />
@@ -130,7 +132,9 @@ const LiderInscriptionForm = ({ activity }) => {
                   size="small"
                   type="text"
                   fullWidth
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   required
                 />
               )}
@@ -148,7 +152,9 @@ const LiderInscriptionForm = ({ activity }) => {
                   size="small"
                   type="text"
                   fullWidth
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                   required
                 />
               )}
@@ -166,7 +172,9 @@ const LiderInscriptionForm = ({ activity }) => {
                   size="small"
                   type="text"
                   fullWidth
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               )}
             />
@@ -178,8 +186,10 @@ const LiderInscriptionForm = ({ activity }) => {
               size="small"
               type="text"
               fullWidth
-              focused
               required
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("emergency_phone")}
             />
           </Grid>
@@ -191,7 +201,9 @@ const LiderInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("t_shirt_size")}
             />
           </Grid>
@@ -203,7 +215,9 @@ const LiderInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("medicines")}
             />
           </Grid>

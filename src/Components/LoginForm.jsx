@@ -22,7 +22,6 @@ const LoginForm = ({ onLogin }) => {
     handleSubmit,
   } = useForm();
 
-
   const url = `${config.apiUrl}/web_user/login/`;
 
   function onSubmit(data) {
@@ -92,14 +91,6 @@ const LoginForm = ({ onLogin }) => {
               fullWidth
               {...register("password")}
             />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Link to="/change_password">
-              <Button color="primary" size="small">
-                Forgot password?
-              </Button>
-            </Link>
           </Grid>
 
           {errorMessage && (

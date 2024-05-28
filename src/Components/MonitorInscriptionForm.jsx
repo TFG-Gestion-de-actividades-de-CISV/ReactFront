@@ -9,6 +9,7 @@ import {
   AlertTitle,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import config from "../config";
 
 const MonitorInscriptionForm = ({ activity }) => {
   const {
@@ -32,12 +33,10 @@ const MonitorInscriptionForm = ({ activity }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const url = "http://localhost:8000/activities/monitor_inscription/";
+  const url = `${config.apiUrl}/activities/monitor_inscription/`;
+  const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/monitor`;
 
   useEffect(() => {
-    const getOrCreateUrl =
-      "http://localhost:8000/activities/get_or_create_inscription/monitor";
-
     fetch(getOrCreateUrl, {
       method: "GET",
       credentials: "include",
@@ -111,7 +110,9 @@ const MonitorInscriptionForm = ({ activity }) => {
                   type="text"
                   fullWidth
                   required
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               )}
             />
@@ -129,7 +130,9 @@ const MonitorInscriptionForm = ({ activity }) => {
                   type="text"
                   fullWidth
                   required
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               )}
             />
@@ -146,7 +149,9 @@ const MonitorInscriptionForm = ({ activity }) => {
                   size="small"
                   type="text"
                   fullWidth
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               )}
             />
@@ -159,7 +164,9 @@ const MonitorInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("emergency_phone")}
             />
           </Grid>
@@ -171,7 +178,9 @@ const MonitorInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("t_shirt_size")}
             />
           </Grid>
@@ -183,7 +192,9 @@ const MonitorInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("medicines")}
             />
           </Grid>

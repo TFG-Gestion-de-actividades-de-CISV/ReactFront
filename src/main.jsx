@@ -22,6 +22,7 @@ import NinosInscriptionView from "./Views/NinosInscriptionView";
 import MayoresInscriptionView from "./Views/MayoresInscriptionView";
 import MonitorInscriptionView from "./Views/MonitorInscriptionView";
 import LiderInscriptionView from "./Views/LiderInscriptionView";
+import EditProfileView from "./Views/EditProfileView";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const isLogged = localStorage.getItem("isLogged") === "true";
@@ -155,6 +156,15 @@ const App = () => {
           element={
             <ProtectedRouteUser>
               <LiderInscriptionView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/profile"
+          element={
+            <ProtectedRouteUser>
+              <EditProfileView />
             </ProtectedRouteUser>
           }
         />
