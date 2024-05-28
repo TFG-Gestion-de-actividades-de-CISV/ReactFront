@@ -9,6 +9,7 @@ import {
   AlertTitle,
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
+import config from "../config";
 
 const NinosInscriptionForm = ({ activity }) => {
   const {
@@ -30,12 +31,10 @@ const NinosInscriptionForm = ({ activity }) => {
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
-  const url = "http://localhost:8000/activities/ninos_inscription/";
+  const url = `${config.apiUrl}/activities/ninos_inscription/`;
+  const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/ninos`;
 
   useEffect(() => {
-    const getOrCreateUrl =
-      "http://localhost:8000/activities/get_or_create_inscription/ninos";
-
     fetch(getOrCreateUrl, {
       method: "GET",
       credentials: "include",
@@ -108,7 +107,9 @@ const NinosInscriptionForm = ({ activity }) => {
                   size="small"
                   type="text"
                   fullWidth
-                  focused
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
                 />
               )}
             />
@@ -120,7 +121,9 @@ const NinosInscriptionForm = ({ activity }) => {
               size="small"
               type="text"
               fullWidth
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               required
               {...register("emergency_phone")}
             />
@@ -133,7 +136,9 @@ const NinosInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("t_shirt_size")}
             />
           </Grid>
@@ -145,7 +150,9 @@ const NinosInscriptionForm = ({ activity }) => {
               type="text"
               fullWidth
               required
-              focused
+              InputLabelProps={{
+                shrink: true,
+              }}
               {...register("medicines")}
             />
           </Grid>
