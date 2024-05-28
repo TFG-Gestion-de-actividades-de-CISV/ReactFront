@@ -11,6 +11,10 @@ const UserMainView = ({ onLogout }) => {
   const handleActivityClick = (id) => {
     navigate(`/user/activity/${id}`);
   };
+
+  const handleProfileClick = (id) => {
+    navigate(`/user/profile`);
+  };
   return (
     <>
       <Box display="flex">
@@ -24,6 +28,7 @@ const UserMainView = ({ onLogout }) => {
           <Button onClick={() => setActiveComponent("activities")}>
             Actividades disponibles
           </Button>
+          <Button onClick={handleProfileClick}>Profile</Button>
 
           <LogoutButton onLogout={onLogout} />
         </Box>
