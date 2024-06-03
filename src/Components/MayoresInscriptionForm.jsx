@@ -40,12 +40,19 @@ const MayoresInscriptionForm = ({ activity }) => {
   useEffect(() => {
     const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/mayores`;
 
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key === "health_card" || key === "pago") {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
+
     fetch(getOrCreateUrl, {
       method: "GET",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {

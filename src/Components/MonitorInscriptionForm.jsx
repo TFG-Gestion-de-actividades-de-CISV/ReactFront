@@ -27,6 +27,11 @@ const MonitorInscriptionForm = ({ activity }) => {
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
+      health_card: null,
+      pago: null,
+      cisv_safeguarding: null,
+      criminal_offenses_certificate: null,
+      sexual_crimes_certificate: null,
     },
   });
 
@@ -79,15 +84,25 @@ const MonitorInscriptionForm = ({ activity }) => {
   const onSubmit = (data) => {
     data["activity"] = activity;
 
-    console.log(data);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (
+        key === "health_card" ||
+        key === "pago" ||
+        key == "cisv_safeguarding" ||
+        key == "criminal_offenses_certificate" ||
+        key == "sexual_crimes_certificate"
+      ) {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
 
     fetch(url, {
       method: "POST",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     })
       .then((response) => {
         if (response.ok) {
@@ -292,7 +307,7 @@ const MonitorInscriptionForm = ({ activity }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Ver certificado de delitos penales
+                  Ver CISV Safeguarding
                 </a>
               </div>
             )}
