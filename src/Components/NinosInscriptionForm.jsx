@@ -17,6 +17,7 @@ const NinosInscriptionForm = ({ activity }) => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
     reset,
   } = useForm({
     defaultValues: {
@@ -25,11 +26,15 @@ const NinosInscriptionForm = ({ activity }) => {
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
+      health_card: null,
+      pago: null,
     },
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [healthCardUrl, setHealthCardUrl] = useState(null);
+  const [pagoUrl, setPagoUrl] = useState(null);
 
   const url = `${config.apiUrl}/activities/ninos_inscription/`;
   const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/ninos`;
@@ -45,8 +50,15 @@ const NinosInscriptionForm = ({ activity }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
+          console.log(data);
           // Si hay datos, actualiza los valores del formulario
           reset(data);
+          if (data.health_card) {
+            setHealthCardUrl(data.health_card);
+          }
+          if (data.pago) {
+            setPagoUrl(data.pago);
+          }
         }
       })
       .catch((error) => {
@@ -57,15 +69,19 @@ const NinosInscriptionForm = ({ activity }) => {
   const onSubmit = (data) => {
     data["activity"] = activity;
 
-    console.log(data);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if (key === "health_card" || key === "pago") {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
 
     fetch(url, {
       method: "POST",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     })
       .then((response) => {
         if (response.ok) {
@@ -155,6 +171,35 @@ const NinosInscriptionForm = ({ activity }) => {
               }}
               {...register("medicines")}
             />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Tarjeta Sanitaria</Typography>
+            <input type="file" accept=".pdf" {...register("health_card")} />
+            {healthCardUrl && (
+              <div>
+                <a
+                  href={healthCardUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver Tarjeta Sanitaria
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Comprobante de pago</Typography>
+
+            <input type="file" accept=".pdf" {...register("pago")} />
+            {pagoUrl && (
+              <div>
+                <a href={pagoUrl} target="_blank" rel="noopener noreferrer">
+                  Ver comprobante de pago
+                </a>
+              </div>
+            )}
           </Grid>
 
           <Grid item xs={12} md={6}>
