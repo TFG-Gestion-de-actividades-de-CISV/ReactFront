@@ -32,6 +32,11 @@ const MonitorInscriptionForm = ({ activity }) => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [sexualCrimesUrl, setSexualCrimesUrl] = useState(null);
+  const [criminalOffensesUrl, setCriminalOffensesUrl] = useState(null);
+  const [cisvSafeguardingUrl, setCisvSafeguardingUrl] = useState(null);
+  const [healthCardUrl, setHealthCardUrl] = useState(null);
+  const [pagoUrl, setPagoUrl] = useState(null);
 
   const url = `${config.apiUrl}/activities/monitor_inscription/`;
   const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/monitor`;
@@ -49,6 +54,21 @@ const MonitorInscriptionForm = ({ activity }) => {
         if (data) {
           // Si hay datos, actualiza los valores del formulario
           reset(data);
+          if (data.health_card) {
+            setHealthCardUrl(data.health_card);
+          }
+          if (data.criminal_offenses_certificate) {
+            setCriminalOffensesUrl(data.criminal_offenses_certificate);
+          }
+          if (data.sexual_crimes_certificate) {
+            setSexualCrimesUrl(data.sexual_crimes_certificate);
+          }
+          if (data.cisv_safeguarding) {
+            setCisvSafeguardingUrl(data.cisv_safeguarding);
+          }
+          if (data.pago) {
+            setPagoUrl(data.pago);
+          }
         }
       })
       .catch((error) => {
@@ -102,6 +122,7 @@ const MonitorInscriptionForm = ({ activity }) => {
             <Controller
               name="dni"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -122,6 +143,7 @@ const MonitorInscriptionForm = ({ activity }) => {
             <Controller
               name="languages"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -142,6 +164,7 @@ const MonitorInscriptionForm = ({ activity }) => {
             <Controller
               name="allergy"
               control={control}
+              defaultValue=""
               render={({ field }) => (
                 <TextField
                   {...field}
@@ -167,7 +190,7 @@ const MonitorInscriptionForm = ({ activity }) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              {...register("emergency_phone")}
+              {...register("emergency_phone", { value: "" })}
             />
           </Grid>
 
@@ -181,7 +204,7 @@ const MonitorInscriptionForm = ({ activity }) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              {...register("t_shirt_size")}
+              {...register("t_shirt_size", { value: "" })}
             />
           </Grid>
 
@@ -195,8 +218,97 @@ const MonitorInscriptionForm = ({ activity }) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              {...register("medicines")}
+              {...register("medicines", { value: "" })}
             />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Tarjeta Sanitaria</Typography>
+            <input type="file" accept=".pdf" {...register("health_card")} />
+            {healthCardUrl && (
+              <div>
+                <a
+                  href={healthCardUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver Tarjeta Sanitaria
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Certificado de delitos sexuales</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("sexual_crimes_certificate")}
+            />
+            {sexualCrimesUrl && (
+              <div>
+                <a
+                  href={sexualCrimesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos sexuales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Certificado de delitos penales</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("criminal_offenses_certificate")}
+            />
+            {criminalOffensesUrl && (
+              <div>
+                <a
+                  href={criminalOffensesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos penales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> CISV Safeguarding</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("cisv_safeguarding")}
+            />
+            {cisvSafeguardingUrl && (
+              <div>
+                <a
+                  href={cisvSafeguardingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos penales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Comprobante de pago</Typography>
+
+            <input type="file" accept=".pdf" {...register("pago")} />
+            {pagoUrl && (
+              <div>
+                <a href={pagoUrl} target="_blank" rel="noopener noreferrer">
+                  Ver comprobante de pago
+                </a>
+              </div>
+            )}
           </Grid>
 
           <Grid item xs={12} md={6}>
@@ -204,8 +316,8 @@ const MonitorInscriptionForm = ({ activity }) => {
 
             <Controller
               name="cisv_authorization"
-              required
               control={control}
+              defaultValue={false}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />
               )}

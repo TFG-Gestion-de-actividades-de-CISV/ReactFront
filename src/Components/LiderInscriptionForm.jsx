@@ -29,11 +29,19 @@ const LiderInscriptionForm = ({ activity }) => {
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
+      sexual_crimes_certificate: null,
+      criminal_offenses_certificate: null,
+      cisv_safeguarding: null,
+      health_card: null,
     },
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [sexualCrimesUrl, setSexualCrimesUrl] = useState(null);
+  const [criminalOffensesUrl, setCriminalOffensesUrl] = useState(null);
+  const [cisvSafeguardingUrl, setCisvSafeguardingUrl] = useState(null);
+  const [healthCardUrl, setHealthCardUrl] = useState(null);
 
   const url = `${config.apiUrl}/activities/lider_inscription/`;
 
@@ -52,6 +60,18 @@ const LiderInscriptionForm = ({ activity }) => {
         if (data) {
           // Si hay datos, actualiza los valores del formulario
           reset(data);
+          if (data.health_card) {
+            setHealthCardUrl(data.health_card);
+          }
+          if (data.criminal_offenses_certificate) {
+            setCriminalOffensesUrl(data.criminal_offenses_certificate);
+          }
+          if (data.sexual_crimes_certificate) {
+            setSexualCrimesUrl(data.sexual_crimes_certificate);
+          }
+          if (data.cisv_safeguarding) {
+            setCisvSafeguardingUrl(data.cisv_safeguarding);
+          }
         }
       })
       .catch((error) => {
@@ -232,6 +252,82 @@ const LiderInscriptionForm = ({ activity }) => {
                 <Switch {...field} checked={field.value} color="primary" />
               )}
             />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Tarjeta Sanitaria</Typography>
+            <input type="file" accept=".pdf" {...register("health_card")} />
+            {healthCardUrl && (
+              <div>
+                <a
+                  href={healthCardUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver Tarjeta Sanitaria
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Certificado de delitos sexuales</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("sexual_crimes_certificate")}
+            />
+            {sexualCrimesUrl && (
+              <div>
+                <a
+                  href={sexualCrimesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos sexuales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Certificado de delitos penales</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("criminal_offenses_certificate")}
+            />
+            {criminalOffensesUrl && (
+              <div>
+                <a
+                  href={criminalOffensesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos penales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> CISV Safeguarding</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("cisv_safeguarding")}
+            />
+            {cisvSafeguardingUrl && (
+              <div>
+                <a
+                  href={cisvSafeguardingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos penales
+                </a>
+              </div>
+            )}
           </Grid>
 
           <Grid item xs={12} md={6}>

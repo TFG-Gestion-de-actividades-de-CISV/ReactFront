@@ -25,11 +25,15 @@ const MayoresInscriptionForm = ({ activity }) => {
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
+      health_card: null,
+      pago: null,
     },
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [healthCardUrl, setHealthCardUrl] = useState(null);
+  const [pagoUrl, setPagoUrl] = useState(null);
 
   const url = `${config.apiUrl}/activities/mayores_inscription/`;
 
@@ -48,6 +52,12 @@ const MayoresInscriptionForm = ({ activity }) => {
         if (data) {
           // Si hay datos, actualiza los valores del formulario
           reset(data);
+          if (data.health_card) {
+            setHealthCardUrl(data.health_card);
+          }
+          if (data.pago) {
+            setPagoUrl(data.pago);
+          }
         }
       })
       .catch((error) => {
@@ -156,6 +166,35 @@ const MayoresInscriptionForm = ({ activity }) => {
               required
               {...register("medicines")}
             />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Tarjeta Sanitaria</Typography>
+            <input type="file" accept=".pdf" {...register("health_card")} />
+            {healthCardUrl && (
+              <div>
+                <a
+                  href={healthCardUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver Tarjeta Sanitaria
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Comprobante de pago</Typography>
+
+            <input type="file" accept=".pdf" {...register("pago")} />
+            {pagoUrl && (
+              <div>
+                <a href={pagoUrl} target="_blank" rel="noopener noreferrer">
+                  Ver comprobante de pago
+                </a>
+              </div>
+            )}
           </Grid>
 
           <Grid item xs={12} md={6}>
