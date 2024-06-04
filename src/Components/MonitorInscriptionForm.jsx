@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config";
+import CisvConditionsDialog from "./CisvConditionsDialog";
 
 const MonitorInscriptionForm = ({ activity }) => {
   const {
@@ -23,7 +24,7 @@ const MonitorInscriptionForm = ({ activity }) => {
       dni: "",
       languages: "",
       allergy: "",
-      cisv_authorization: false,
+      image_authorization: false,
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
@@ -42,6 +43,7 @@ const MonitorInscriptionForm = ({ activity }) => {
   const [cisvSafeguardingUrl, setCisvSafeguardingUrl] = useState(null);
   const [healthCardUrl, setHealthCardUrl] = useState(null);
   const [pagoUrl, setPagoUrl] = useState(null);
+  const [cisvAutorization, setCisvAutorization] = useState(false);
 
   const url = `${config.apiUrl}/activities/monitor_inscription/`;
   const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/monitor`;
@@ -327,12 +329,19 @@ const MonitorInscriptionForm = ({ activity }) => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Typography variant="h6">¿Autorización de CISV?</Typography>
+            <CisvConditionsDialog
+              checked={cisvAutorization}
+              onChange={(e) => setCisvAutorization(e.target.checked)}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">¿Autoriza usar su imagen?</Typography>
 
             <Controller
-              name="cisv_authorization"
+              name="image_authorization"
+              required
               control={control}
-              defaultValue={false}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />
               )}
@@ -358,7 +367,11 @@ const MonitorInscriptionForm = ({ activity }) => {
           )}
 
           <Grid item xs={12}>
-            <Button variant="outlined" type="submit">
+            <Button
+              variant="outlined"
+              type="submit"
+              disabled={!cisvAutorization}
+            >
               Inscribirse
             </Button>
           </Grid>
