@@ -18,8 +18,8 @@ const AdminActivityView = () => {
     mayor: "Mayor",
   };
 
-  const handleInscriptionClick = (rol) => {
-    navigate(`/admin/get_inscription/${id}/${rol}`);
+  const handleInscriptionClick = (rol, user_email) => {
+    navigate(`/admin/get_inscription/${id}/${user_email}/${rol}`);
   };
 
   useEffect(() => {
@@ -40,13 +40,18 @@ const AdminActivityView = () => {
         <Card
           key={inscription.id}
           sx={{ marginBottom: 5 }}
-          onClick={() => handleInscriptionClick(inscription.rol)}
+          onClick={() =>
+            handleInscriptionClick(inscription.rol, inscription.user_email)
+          }
         >
           <CardContent>
             <Typography variant="h5">
               {inscription.user_name} {inscription.user_surnames}
             </Typography>
             <Typography variant="subtitle1">{inscription.activity}</Typography>
+            <Typography variant="body2">
+              <b>Email:</b> {inscription.user_email}
+            </Typography>
             <Typography variant="body2">
               <b>Rol:</b> {rolString[inscription.rol]}
             </Typography>
