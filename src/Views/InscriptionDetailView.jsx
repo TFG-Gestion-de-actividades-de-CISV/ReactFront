@@ -4,6 +4,9 @@ import { Container, Alert, AlertTitle } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NinosInscriptionDetail from "../Components/NinosInscriptionDetail";
 import config from "../config";
+import MonitorInscriptionDetail from "../Components/MonitorInscriptionDetail";
+import LiderInscriptionDetail from "../Components/LiderInscriptionDetail";
+import MayoresInscriptionDetail from "../Components/MayoresInscriptionDetail";
 
 const InscriptionDetailView = () => {
   const location = useLocation();
@@ -36,6 +39,9 @@ const InscriptionDetailView = () => {
   return (
     <Container>
       {rol === "ninos" && data && <NinosInscriptionDetail data={data} />}
+      {rol === "mayores" && data && <MayoresInscriptionDetail data={data} />}
+      {rol === "lider" && data && <LiderInscriptionDetail data={data} />}
+      {rol === "monitor" && data && <MonitorInscriptionDetail data={data} />}
 
       {errorMessage && (
         <Alert severity="error">

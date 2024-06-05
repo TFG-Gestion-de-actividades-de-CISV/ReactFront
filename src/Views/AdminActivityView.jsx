@@ -14,8 +14,8 @@ const AdminActivityView = () => {
   const rolString = {
     ninos: "NIño",
     lider: "Lider",
-    monitor: "Monitr",
-    mayor: "Mayor",
+    monitor: "Monitor",
+    mayores: "Mayor",
   };
 
   const handleInscriptionClick = (rol, user_email) => {
