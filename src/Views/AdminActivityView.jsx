@@ -19,7 +19,7 @@ const AdminActivityView = () => {
   };
 
   const handleInscriptionClick = (rol, user_email) => {
-    navigate(`/admin/get_inscription/${id}/${user_email}/${rol}`);
+    navigate(`/admin/get_inscription`, { state: { id, user_email, rol } });
   };
 
   useEffect(() => {

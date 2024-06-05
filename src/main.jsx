@@ -171,7 +171,7 @@ const App = () => {
         />
 
         <Route
-          path="/admin/get_inscription/:id/:user_email/:rol"
+          path="/admin/get_inscription"
           element={
             <ProtectedRouteAdmin>
               <InscriptionDetailView />

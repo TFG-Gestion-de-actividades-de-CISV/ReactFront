@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Container, Alert, AlertTitle } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import NinosInscriptionDetail from "../Components/NinosInscriptionDetail";
 import config from "../config";
 
 const InscriptionDetailView = () => {
-  const { id: activityId, user_email: user_email, rol: role } = useParams();
+  const location = useLocation();
+  const { id, user_email, rol } = location.state;
+
   const [data, setData] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const url = `${config.apiUrl}/activities/get_inscription/${activityId}/${user_email}/${role}`;
+  const url = `${config.apiUrl}/activities/get_inscription/${id}/${user_email}/${rol}`;
 
   useEffect(() => {
     console.log("Fetching URL: ", url);
@@ -33,7 +35,7 @@ const InscriptionDetailView = () => {
   }, []);
   return (
     <Container>
-      {role === "ninos" && data && <NinosInscriptionDetail data={data} />}
+      {rol === "ninos" && data && <NinosInscriptionDetail data={data} />}
 
       {errorMessage && (
         <Alert severity="error">
