@@ -71,7 +71,7 @@ const MayoresInscriptionForm = ({ activity }) => {
 
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
-      if (key === "health_card" || key === "pago") {
+      if ((key === "health_card" || key === "pago") && data[key]) {
         formData.append(key, data[key][0]);
       } else {
         formData.append(key, data[key]);

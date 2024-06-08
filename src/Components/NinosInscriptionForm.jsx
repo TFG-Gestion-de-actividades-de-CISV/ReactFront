@@ -73,7 +73,7 @@ const NinosInscriptionForm = ({ activity }) => {
 
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
-      if (key === "health_card" || key === "pago") {
+      if ((key === "health_card" || key === "pago") && data[key]) {
         formData.append(key, data[key][0]);
       } else {
         formData.append(key, data[key]);
@@ -177,12 +177,7 @@ const NinosInscriptionForm = ({ activity }) => {
 
           <Grid item xs={12} md={6}>
             <Typography> Tarjeta Sanitaria</Typography>
-            <input
-              type="file"
-              required
-              accept=".pdf"
-              {...register("health_card")}
-            />
+            <input type="file" accept=".pdf" {...register("health_card")} />
             {healthCardUrl && (
               <div>
                 <a
@@ -199,7 +194,7 @@ const NinosInscriptionForm = ({ activity }) => {
           <Grid item xs={12} md={6}>
             <Typography> Comprobante de pago</Typography>
 
-            <input type="file" required accept=".pdf" {...register("pago")} />
+            <input type="file" accept=".pdf" {...register("pago")} />
             {pagoUrl && (
               <div>
                 <a href={pagoUrl} target="_blank" rel="noopener noreferrer">

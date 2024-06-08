@@ -89,11 +89,12 @@ const MonitorInscriptionForm = ({ activity }) => {
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (
-        key === "health_card" ||
-        key === "pago" ||
-        key == "cisv_safeguarding" ||
-        key == "criminal_offenses_certificate" ||
-        key == "sexual_crimes_certificate"
+        (key === "health_card" ||
+          key === "pago" ||
+          key == "cisv_safeguarding" ||
+          key == "criminal_offenses_certificate" ||
+          key == "sexual_crimes_certificate") &&
+        data[key]
       ) {
         formData.append(key, data[key][0]);
       } else {
