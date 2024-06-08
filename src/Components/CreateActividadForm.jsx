@@ -41,6 +41,19 @@ const CreateActividadForm = () => {
             setSuccessMessage("Actividad creada exitosamente");
             setErrorMessage(null);
           });
+        } else {
+          response.json().then((data) => {
+            if (data.error.price) {
+              setErrorMessage(data.error.price);
+              setSuccessMessage(null);
+            } else if (data.error.non_field_errors) {
+              setErrorMessage(data.error.non_field_errors);
+              setSuccessMessage(null);
+            } else {
+              setErrorMessage(data.error);
+              setSuccessMessage(null);
+            }
+          });
         }
       })
       .catch((error) => {

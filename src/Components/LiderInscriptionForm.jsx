@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config";
+import CisvConditionsDialog from "./CisvConditionsDialog";
 
 const LiderInscriptionForm = ({ activity }) => {
   const {
@@ -25,7 +26,7 @@ const LiderInscriptionForm = ({ activity }) => {
       languages: "",
       first_aid: false,
       allergy: "",
-      cisv_authorization: false,
+      image_authorization: false,
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
@@ -42,6 +43,7 @@ const LiderInscriptionForm = ({ activity }) => {
   const [criminalOffensesUrl, setCriminalOffensesUrl] = useState(null);
   const [cisvSafeguardingUrl, setCisvSafeguardingUrl] = useState(null);
   const [healthCardUrl, setHealthCardUrl] = useState(null);
+  const [cisvAutorization, setCisvAutorization] = useState(false);
 
   const url = `${config.apiUrl}/activities/lider_inscription/`;
 
@@ -85,10 +87,11 @@ const LiderInscriptionForm = ({ activity }) => {
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
       if (
-        key === "health_card" ||
-        key == "cisv_safeguarding" ||
-        key == "criminal_offenses_certificate" ||
-        key == "sexual_crimes_certificate"
+        (key === "health_card" ||
+          key == "cisv_safeguarding" ||
+          key == "criminal_offenses_certificate" ||
+          key == "sexual_crimes_certificate") &&
+        data[key]
       ) {
         formData.append(key, data[key][0]);
       } else {
@@ -110,6 +113,9 @@ const LiderInscriptionForm = ({ activity }) => {
           response.json().then((data) => {
             if (data.error.emergency_phone) {
               setErrorMessage(data.error.emergency_phone);
+              setSuccessMessage(null);
+            } else if (data.error.dni) {
+              setErrorMessage(data.error.dni);
               setSuccessMessage(null);
             } else {
               setErrorMessage(data.error);
@@ -136,11 +142,12 @@ const LiderInscriptionForm = ({ activity }) => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="DNI"
+                  label="DNI/NIE"
                   size="small"
                   type="text"
                   fullWidth
                   required
+                  sx={{ marginTop: 3 }}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -339,12 +346,19 @@ const LiderInscriptionForm = ({ activity }) => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Typography variant="h6">¿Autorización de CISV?</Typography>
+            <CisvConditionsDialog
+              checked={cisvAutorization}
+              onChange={(e) => setCisvAutorization(e.target.checked)}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">¿Autoriza usar su imagen?</Typography>
 
             <Controller
-              name="cisv_authorization"
-              control={control}
+              name="image_authorization"
               required
+              control={control}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />
               )}
@@ -370,7 +384,12 @@ const LiderInscriptionForm = ({ activity }) => {
           )}
 
           <Grid item xs={12}>
-            <Button variant="outlined" type="submit">
+            <Button
+              variant="outlined"
+              type="submit"
+              sx={{ marginBottom: 2 }}
+              disabled={!cisvAutorization}
+            >
               Inscribirse
             </Button>
           </Grid>

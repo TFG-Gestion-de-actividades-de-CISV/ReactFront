@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import config from "../config";
+import CisvConditionsDialog from "./CisvConditionsDialog";
 
 const MayoresInscriptionForm = ({ activity }) => {
   const {
@@ -21,7 +22,7 @@ const MayoresInscriptionForm = ({ activity }) => {
   } = useForm({
     defaultValues: {
       allergy: "",
-      cisv_authorization: false,
+      image_authorization: false,
       emergency_phone: "",
       t_shirt_size: "",
       medicines: "",
@@ -34,25 +35,18 @@ const MayoresInscriptionForm = ({ activity }) => {
   const [successMessage, setSuccessMessage] = useState(null);
   const [healthCardUrl, setHealthCardUrl] = useState(null);
   const [pagoUrl, setPagoUrl] = useState(null);
+  const [cisvAutorization, setCisvAutorization] = useState(false);
 
   const url = `${config.apiUrl}/activities/mayores_inscription/`;
+  const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/mayores`;
 
   useEffect(() => {
-    const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/mayores`;
-
-    const formData = new FormData();
-    Object.keys(data).forEach((key) => {
-      if (key === "health_card" || key === "pago") {
-        formData.append(key, data[key][0]);
-      } else {
-        formData.append(key, data[key]);
-      }
-    });
-
     fetch(getOrCreateUrl, {
       method: "GET",
       credentials: "include",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -75,15 +69,19 @@ const MayoresInscriptionForm = ({ activity }) => {
   const onSubmit = (data) => {
     data["activity"] = activity;
 
-    console.log(data);
+    const formData = new FormData();
+    Object.keys(data).forEach((key) => {
+      if ((key === "health_card" || key === "pago") && data[key]) {
+        formData.append(key, data[key][0]);
+      } else {
+        formData.append(key, data[key]);
+      }
+    });
 
     fetch(url, {
       method: "POST",
       credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+      body: formData,
     })
       .then((response) => {
         if (response.ok) {
@@ -205,12 +203,19 @@ const MayoresInscriptionForm = ({ activity }) => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Typography variant="h6">¿Autorización de CISV?</Typography>
+            <CisvConditionsDialog
+              checked={cisvAutorization}
+              onChange={(e) => setCisvAutorization(e.target.checked)}
+            />
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">¿Autoriza usar su imagen?</Typography>
 
             <Controller
-              name="cisv_authorization"
-              control={control}
+              name="image_authorization"
               required
+              control={control}
               render={({ field }) => (
                 <Switch {...field} checked={field.value} color="primary" />
               )}
@@ -236,7 +241,11 @@ const MayoresInscriptionForm = ({ activity }) => {
           )}
 
           <Grid item xs={12}>
-            <Button variant="outlined" type="submit">
+            <Button
+              variant="outlined"
+              type="submit"
+              disabled={!cisvAutorization}
+            >
               Inscribirse
             </Button>
           </Grid>

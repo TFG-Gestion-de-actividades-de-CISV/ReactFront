@@ -23,6 +23,7 @@ import MayoresInscriptionView from "./Views/MayoresInscriptionView";
 import MonitorInscriptionView from "./Views/MonitorInscriptionView";
 import LiderInscriptionView from "./Views/LiderInscriptionView";
 import EditProfileView from "./Views/EditProfileView";
+import InscriptionDetailView from "./Views/InscriptionDetailView";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const isLogged = localStorage.getItem("isLogged") === "true";
@@ -166,6 +167,15 @@ const App = () => {
             <ProtectedRouteUser>
               <EditProfileView />
             </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/admin/get_inscription"
+          element={
+            <ProtectedRouteAdmin>
+              <InscriptionDetailView />
+            </ProtectedRouteAdmin>
           }
         />
       </Routes>
