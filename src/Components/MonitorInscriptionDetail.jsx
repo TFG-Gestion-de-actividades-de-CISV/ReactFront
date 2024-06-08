@@ -38,7 +38,7 @@ const MonitorInscriptionDetail = ({ data }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>DNI:</strong> {data.dni}
+              <strong>DNI/NIE:</strong> {data.dni}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>

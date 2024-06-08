@@ -118,6 +118,9 @@ const MonitorInscriptionForm = ({ activity }) => {
             if (data.error.emergency_phone) {
               setErrorMessage(data.error.emergency_phone);
               setSuccessMessage(null);
+            } else if (data.error.dni) {
+              setErrorMessage(data.error.dni);
+              setSuccessMessage(null);
             } else {
               setErrorMessage(data.error);
               setSuccessMessage(null);
@@ -144,11 +147,12 @@ const MonitorInscriptionForm = ({ activity }) => {
               render={({ field }) => (
                 <TextField
                   {...field}
-                  label="DNI"
+                  label="DNI/NIE"
                   size="small"
                   type="text"
                   fullWidth
                   required
+                  sx={{ marginTop: 3 }}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -371,6 +375,7 @@ const MonitorInscriptionForm = ({ activity }) => {
             <Button
               variant="outlined"
               type="submit"
+              sx={{ marginBottom: 2 }}
               disabled={!cisvAutorization}
             >
               Inscribirse
