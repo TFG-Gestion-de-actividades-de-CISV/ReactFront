@@ -168,7 +168,6 @@ const MayoresInscriptionForm = ({ activity }) => {
               InputLabelProps={{
                 shrink: true,
               }}
-              required
               {...register("medicines")}
             />
           </Grid>
