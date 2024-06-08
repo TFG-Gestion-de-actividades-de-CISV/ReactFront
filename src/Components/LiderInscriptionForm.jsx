@@ -249,7 +249,6 @@ const LiderInscriptionForm = ({ activity }) => {
               size="small"
               type="text"
               fullWidth
-              required
               InputLabelProps={{
                 shrink: true,
               }}
