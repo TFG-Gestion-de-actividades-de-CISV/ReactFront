@@ -24,6 +24,16 @@ const ChangePasswordForm = () => {
   const url = `${config.apiUrl}/web_user/change_password/`;
 
   function onSubmit(data) {
+    const passwordValidation =
+      /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+
+    if (!passwordValidation.test(data.password_new)) {
+      setErrorMessage(
+        "La contraseña debe contener al menos una letra mayúscula, un número, un símbolo y tener al menos 8 caracteres de longitud."
+      );
+      return;
+    }
+
     fetch(url, {
       method: "POST",
       credentials: "include",
