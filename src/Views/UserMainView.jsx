@@ -3,6 +3,7 @@ import { Button, Container, Typography, Box } from "@mui/material";
 import LogoutButton from "../Components/LogoutButton";
 import ListActivities from "../Components/ListActivities";
 import { useNavigate } from "react-router-dom";
+import ListInscriptions from "../Components/ListInscriptions";
 
 const UserMainView = ({ onLogout }) => {
   const [activeComponent, setActiveComponent] = useState("");
@@ -28,6 +29,9 @@ const UserMainView = ({ onLogout }) => {
           <Button onClick={() => setActiveComponent("activities")}>
             Actividades disponibles
           </Button>
+          <Button onClick={() => setActiveComponent("inscriptions")}>
+            Mis Inscripciones
+          </Button>
           <Button onClick={handleProfileClick}>Profile</Button>
 
           <LogoutButton onLogout={onLogout} />
@@ -37,8 +41,9 @@ const UserMainView = ({ onLogout }) => {
           {activeComponent === "activities" && (
             <ListActivities onActivityClick={handleActivityClick} />
           )}
+          {activeComponent == "inscriptions" && <ListInscriptions />}
         </Box>
-      </Box>{" "}
+      </Box>
     </>
   );
 };
