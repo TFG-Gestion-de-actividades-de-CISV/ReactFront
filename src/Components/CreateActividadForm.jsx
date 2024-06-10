@@ -27,7 +27,6 @@ const CreateActividadForm = () => {
   const url = `${config.apiUrl}/activities/create_activity/`;
 
   function onSubmit(data) {
-    console.log("Sending data:", data); // Debug: Log data being sent
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -37,40 +36,32 @@ const CreateActividadForm = () => {
       body: JSON.stringify(data),
     })
       .then((response) => {
-        console.log("Response received:", response); // Debug: Log the response
-        return response
-          .json()
-          .then((data) => ({ status: response.status, body: data }));
-      })
-      .then(({ status, body }) => {
-        if (status === 200) {
-          console.log("Success response data:", body); // Debug: Log success data
-          setSuccessMessage("Actividad creada exitosamente");
-          setErrorMessage(null);
+        if (response.ok) {
+          response.json().then((data) => {
+            setSuccessMessage("Actividad creada exitosamente");
+            setErrorMessage(null);
+          });
         } else {
-          console.log("Error response data:", body); // Debug: Log error data
-          if (body.error) {
-            if (body.error.price) {
-              setErrorMessage(body.error.price.join(" "));
-            } else if (body.error.non_field_errors) {
-              setErrorMessage(body.error.non_field_errors.join(" "));
+          response.json().then((data) => {
+            if (data.error.price) {
+              setErrorMessage(data.error.price);
+              setSuccessMessage(null);
+            } else if (data.error.non_field_errors) {
+              setErrorMessage(data.error.non_field_errors);
+              setSuccessMessage(null);
             } else {
-              setErrorMessage("Ha ocurrido un error desconocido.");
+              setErrorMessage(data.error);
+              setSuccessMessage(null);
             }
-            setSuccessMessage(null);
-          } else {
-            setErrorMessage("Error desconocido");
-            setSuccessMessage(null);
-          }
+          });
         }
       })
       .catch((error) => {
-        console.error("Fetch error:", error); // Debug: Log fetch error
+        console.error("Error:", error);
         setErrorMessage("Ha ocurrido un error. Por favor, inténtalo de nuevo.");
         setSuccessMessage(null);
       });
   }
-
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
