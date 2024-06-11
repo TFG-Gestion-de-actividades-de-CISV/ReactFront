@@ -2,6 +2,7 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { Button, Container, Typography, Box } from "@mui/material";
+import UserMainButton from "./UserMainButton";
 
 const UserActivityView = () => {
   const { id } = useParams();
@@ -47,6 +48,7 @@ const UserActivityView = () => {
             Monitor (18-20 años)
           </Button>
           <Button sx={{ m: 1 }}> Padre / madre / tutor</Button>
+          <UserMainButton />
         </Box>
       </Container>
     </>

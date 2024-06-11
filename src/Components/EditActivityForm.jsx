@@ -155,8 +155,8 @@ const EditActivityForm = ({ activity, onActivityUpdated }) => {
             />
           )}
         />
-        <Button type="submit" variant="contained" color="primary">
-          Guardar
+        <Button type="submit" variant="outlined" color="primary">
+          Editar
         </Button>
       </form>
 

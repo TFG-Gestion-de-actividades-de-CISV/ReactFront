@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 const ListActivities = ({ onActivityClick }) => {
   const [activities, setActivities] = useState([]);
   const navigate = useNavigate();
+  const isAdmin = localStorage.getItem("isAdmin") === "true";
 
   const url = `${config.apiUrl}/activities/all_activities`;
 
@@ -69,13 +70,15 @@ const ListActivities = ({ onActivityClick }) => {
             >
               Ver Inscripciones
             </Button>
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={() => handleEditClick(activity.id)}
-            >
-              Editar
-            </Button>
+            {isAdmin && (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={() => handleEditClick(activity.id)}
+              >
+                Editar
+              </Button>
+            )}
           </CardContent>
         </Card>
       ))}

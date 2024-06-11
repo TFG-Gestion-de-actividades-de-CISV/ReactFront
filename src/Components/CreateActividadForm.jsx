@@ -12,6 +12,7 @@ import {
   Alert,
   AlertTitle,
 } from "@mui/material";
+import AdminMainButton from "../Views/AdminMainButton";
 
 const CreateActividadForm = () => {
   const [errorMessage, setErrorMessage] = useState(null);

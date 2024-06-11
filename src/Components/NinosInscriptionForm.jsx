@@ -52,7 +52,6 @@ const NinosInscriptionForm = ({ activity }) => {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          console.log(data);
           // Si hay datos, actualiza los valores del formulario
           reset(data);
           if (data.health_card) {

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { Container, Typography } from "@mui/material";
 import config from "../config";
 import EditActivityForm from "../Components/EditActivityForm";
+import AdminMainButton from "./AdminMainButton";
 
 const EditActivityView = () => {
   const { activityId } = useParams();
@@ -37,6 +38,7 @@ const EditActivityView = () => {
         activity={activity}
         onActivityUpdated={handleActivityUpdated}
       />
+      <AdminMainButton />
     </Container>
   );
 };
