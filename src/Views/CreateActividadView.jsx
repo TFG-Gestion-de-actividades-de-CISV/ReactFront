@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Paper } from "@mui/material";
 import CreateActividadForm from "../Components/CreateActividadForm";
+import AdminMainButton from "./AdminMainButton";
 
 const CreateActividadView = () => {
   return (
@@ -20,6 +21,7 @@ const CreateActividadView = () => {
           }}
         >
           <CreateActividadForm />
+          <AdminMainButton />
         </Paper>
       </Container>
     </>

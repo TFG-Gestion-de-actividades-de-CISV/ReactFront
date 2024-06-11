@@ -3,6 +3,7 @@ import EditProfileForm from "../Components/EditProfileForm";
 import { useParams } from "react-router-dom";
 import { Button, Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import UserMainButton from "./UserMainButton";
 
 const EditProfileView = () => {
   const { id } = useParams();
@@ -31,6 +32,8 @@ const EditProfileView = () => {
           >
             Cambiar Contraseña
           </Button>
+
+          <UserMainButton />
         </Box>
       </Container>
     </>

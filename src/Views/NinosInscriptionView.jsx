@@ -2,6 +2,7 @@ import React from "react";
 import NinosInscriptionForm from "../Components/NinosInscriptionForm";
 import { useParams } from "react-router-dom";
 import { Button, Container, Typography, Box } from "@mui/material";
+import UserMainButton from "./UserMainButton";
 
 const NinosInscriptionView = () => {
   const { id } = useParams();
@@ -17,6 +18,7 @@ const NinosInscriptionView = () => {
           textAlign="center"
         >
           <NinosInscriptionForm activity={id} />
+          <UserMainButton />
         </Box>
       </Container>
     </>

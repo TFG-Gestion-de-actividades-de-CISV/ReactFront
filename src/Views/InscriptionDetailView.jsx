@@ -7,6 +7,7 @@ import config from "../config";
 import MonitorInscriptionDetail from "../Components/MonitorInscriptionDetail";
 import LiderInscriptionDetail from "../Components/LiderInscriptionDetail";
 import MayoresInscriptionDetail from "../Components/MayoresInscriptionDetail";
+import AdminMainButton from "./AdminMainButton";
 
 const InscriptionDetailView = () => {
   const location = useLocation();
@@ -113,6 +114,7 @@ const InscriptionDetailView = () => {
           {errorMessage}
         </Alert>
       )}
+      <AdminMainButton />
     </Container>
   );
 };

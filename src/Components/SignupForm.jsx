@@ -8,7 +8,7 @@ import {
   AlertTitle,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import config from "../config";
 
@@ -21,6 +21,11 @@ const RegisterForm = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/");
+  };
 
   const url = `${config.apiUrl}/web_user/register/`;
   function onSubmit(data) {
@@ -63,7 +68,9 @@ const RegisterForm = () => {
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            setSuccessMessage("Registro exitoso!");
+            setSuccessMessage(
+              "Registro exitoso! Para continuar la petición deberá de ser aceptada por administrador "
+            );
             setErrorMessage(null);
           });
         } else {
@@ -149,8 +156,15 @@ const RegisterForm = () => {
               type="text"
               fullWidth
               required
-              {...register("email")}
+              {...register("email", {
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
+              })}
             />
+            {errors.email?.type === "pattern" && (
+              <Typography variant="p" color="error">
+                El formato del email es incorrecto
+              </Typography>
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
@@ -264,6 +278,16 @@ const RegisterForm = () => {
                 </Button>
               </Link>
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClick}
+              sx={{ marginTop: 2 }}
+            >
+              Volver a Página Principal
+            </Button>
           </Grid>
         </Grid>
       </form>

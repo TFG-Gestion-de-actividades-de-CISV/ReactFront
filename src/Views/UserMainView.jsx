@@ -41,7 +41,7 @@ const UserMainView = ({ onLogout }) => {
           {activeComponent === "activities" && (
             <ListActivities onActivityClick={handleActivityClick} />
           )}
-          {activeComponent == "inscriptions" && <ListInscriptions />}
+          {activeComponent === "inscriptions" && <ListInscriptions />}
         </Box>
       </Box>
     </>
