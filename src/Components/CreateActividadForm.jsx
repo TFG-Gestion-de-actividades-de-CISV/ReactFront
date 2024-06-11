@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 
 const CreateActividadForm = () => {
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
 
