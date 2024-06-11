@@ -46,6 +46,8 @@ const LoginForm = ({ onLogin }) => {
           });
         } else if (response.status === 404) {
           setErrorMessage("Email o contraseña incorrectas");
+        } else if (response.status === 403) {
+          setErrorMessage("La petición de registro aun no ha sido evaluada");
         } else {
           console.log("La respuesta del servidor no fue OK");
         }
