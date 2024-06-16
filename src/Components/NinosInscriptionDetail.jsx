@@ -96,7 +96,7 @@ const NinosInscriptionDetail = ({ data }) => {
           </Grid>
 
           <Grid item xs={12}>
-            <Typography variant="body1">
+            <Typography variant="body1" component="div">
               <strong>Emails de Familiares:</strong>
               {data.family_members_emails
                 ? data.family_members_emails.map((email, index) => (

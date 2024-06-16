@@ -50,6 +50,14 @@ const ListInscriptions = () => {
     }
   };
 
+  const rolString = {
+    ninos: "Niño",
+    lider: "Lider",
+    monitor: "Monitor",
+    mayores: "Mayor",
+    parent: "Padre/Madre/Tutor",
+  };
+
   return (
     <Container>
       <Typography variant="h3" align="center" sx={{ marginBottom: 5 }}>
@@ -68,7 +76,9 @@ const ListInscriptions = () => {
           <Card key={inscription.id} sx={{ marginBottom: 5 }}>
             <CardContent>
               <Typography variant="h5">{inscription.activity_name}</Typography>
-              <Typography variant="body2">Rol: {inscription.rol}</Typography>
+              <Typography variant="body2">
+                Rol: {rolString[inscription.rol]}
+              </Typography>
               <Typography
                 variant="body2"
                 style={{ color: getStatusColor(inscription.status) }}

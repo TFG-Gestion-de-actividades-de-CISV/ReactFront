@@ -12,10 +12,11 @@ const AdminActivityView = () => {
   const url = `${config.apiUrl}/activities/all_inscriptions/${id}`;
 
   const rolString = {
-    ninos: "NIño",
+    ninos: "Niño",
     lider: "Lider",
     monitor: "Monitor",
     mayores: "Mayor",
+    parent: "Padre/Madre/Tutor",
   };
 
   const handleInscriptionClick = (rol, user_email) => {
