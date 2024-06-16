@@ -56,6 +56,7 @@ const RegisterForm = () => {
       email: data.email,
       password: data.password,
       profile: profileData,
+      family_member_email: data.family_member_email,
     };
 
     fetch(url, {
@@ -77,6 +78,9 @@ const RegisterForm = () => {
           response.json().then((data) => {
             if (data.Error.email) {
               setErrorMessage(data.Error.email);
+              setSuccessMessage(null);
+            } else if (data.Error.family_member_email) {
+              setErrorMessage(data.Error.family_member_email);
               setSuccessMessage(null);
             } else if (data.Error.profile) {
               if (data.Error.profile.postal_code) {
@@ -136,7 +140,6 @@ const RegisterForm = () => {
               {...register("surnames")}
             />
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Typography variant="h6">Fecha de nacimiento</Typography>
           </Grid>
@@ -176,7 +179,6 @@ const RegisterForm = () => {
               {...register("phone")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Ciudad"
@@ -187,7 +189,6 @@ const RegisterForm = () => {
               {...register("city")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Código postal"
@@ -198,7 +199,6 @@ const RegisterForm = () => {
               {...register("postal_code")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Contraseña"
@@ -209,7 +209,6 @@ const RegisterForm = () => {
               {...register("password")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Repite contraseña"
@@ -220,13 +219,11 @@ const RegisterForm = () => {
               {...register("repeat_password")}
             />
           </Grid>
-
           <Grid item md={6}>
             <Typography variant="h6">
               ¿Tiene algún familiar registrado?
             </Typography>
           </Grid>
-
           <Grid item md={6}>
             <Switch
               checked={familiares}
@@ -234,7 +231,6 @@ const RegisterForm = () => {
               color="primary"
             ></Switch>
           </Grid>
-
           <Grid item xs={12}>
             {familiares && (
               <TextField
@@ -242,7 +238,15 @@ const RegisterForm = () => {
                 size="small"
                 type="text"
                 fullWidth
+                {...register("family_member_email", {
+                  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
+                })}
               />
+            )}
+            {errors.family_member_email?.type === "pattern" && (
+              <Typography variant="p" color="error">
+                El formato del email es incorrecto
+              </Typography>
             )}
           </Grid>
 
@@ -254,7 +258,6 @@ const RegisterForm = () => {
               </Alert>
             </Grid>
           )}
-
           {errorMessage && (
             <Grid item xs={12}>
               <Alert severity="error">
@@ -263,7 +266,6 @@ const RegisterForm = () => {
               </Alert>
             </Grid>
           )}
-
           <Grid item xs={12}>
             <Button variant="outlined" type="submit">
               Registrarse
