@@ -147,6 +147,16 @@ const LiderInscriptionDetail = ({ data }) => {
               {data.image_authorization ? "Sí" : "No"}
             </Typography>
           </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body1">
+              <strong>Emails de Familiares:</strong>
+              {data.family_members_emails
+                ? data.family_members_emails.map((email, index) => (
+                    <div key={index}>{email}</div>
+                  ))
+                : "No hay familiares"}
+            </Typography>
+          </Grid>
         </Grid>
       </CardContent>
     </Card>
