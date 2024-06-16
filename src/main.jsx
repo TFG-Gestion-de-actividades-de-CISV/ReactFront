@@ -25,6 +25,7 @@ import LiderInscriptionView from "./Views/LiderInscriptionView";
 import EditProfileView from "./Views/EditProfileView";
 import InscriptionDetailView from "./Views/InscriptionDetailView";
 import EditActivityView from "./Views/EditActivityView";
+import ParentInscriptionView from "./Views/ParentInscriptionView";
 
 const ProtectedRouteAdmin = ({ children }) => {
   const isLogged = localStorage.getItem("isLogged") === "true";
@@ -158,6 +159,15 @@ const App = () => {
           element={
             <ProtectedRouteUser>
               <LiderInscriptionView />
+            </ProtectedRouteUser>
+          }
+        />
+
+        <Route
+          path="/user/activity/:id/parent"
+          element={
+            <ProtectedRouteUser>
+              <ParentInscriptionView />
             </ProtectedRouteUser>
           }
         />

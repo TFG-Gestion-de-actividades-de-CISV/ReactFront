@@ -34,6 +34,10 @@ const UserActivityView = () => {
     navigate(`/user/activity/${id}/monitor`);
   };
 
+  const handleParentClick = () => {
+    navigate(`/user/activity/${id}/parent`);
+  };
+
   const handleLiderClick = () => {
     navigate(`/user/activity/${id}/lider`);
   };
@@ -66,6 +70,7 @@ const UserActivityView = () => {
           <Button
             disabled={!activity || !activity.there_are_meting}
             sx={{ m: 1 }}
+            onClick={handleParentClick}
           >
             Padre / madre / tutor
           </Button>

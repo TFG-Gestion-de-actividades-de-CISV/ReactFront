@@ -8,6 +8,7 @@ import MonitorInscriptionDetail from "../Components/MonitorInscriptionDetail";
 import LiderInscriptionDetail from "../Components/LiderInscriptionDetail";
 import MayoresInscriptionDetail from "../Components/MayoresInscriptionDetail";
 import AdminMainButton from "./AdminMainButton";
+import ParentInscriptionDetail from "../Components/ParentInscriptionDetail";
 
 const InscriptionDetailView = () => {
   const location = useLocation();
@@ -19,8 +20,6 @@ const InscriptionDetailView = () => {
   const url = `${config.apiUrl}/activities/get_inscription/${id}/${user_email}/${rol}`;
 
   useEffect(() => {
-    console.log("Fetching URL: ", url);
-
     fetch(url, {
       method: "GET",
       credentials: "include",
@@ -89,6 +88,7 @@ const InscriptionDetailView = () => {
       {rol === "mayores" && data && <MayoresInscriptionDetail data={data} />}
       {rol === "lider" && data && <LiderInscriptionDetail data={data} />}
       {rol === "monitor" && data && <MonitorInscriptionDetail data={data} />}
+      {rol === "parent" && data && <ParentInscriptionDetail data={data} />}
 
       {data && data.status === 0 && (
         <Stack direction="row" spacing={2} marginTop={2}>
