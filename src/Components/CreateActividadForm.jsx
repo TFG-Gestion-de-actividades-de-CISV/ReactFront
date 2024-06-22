@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import config from "../config";
+import { Switch, FormControlLabel } from "@mui/material";
 
 import {
   Grid,
@@ -12,11 +13,12 @@ import {
   Alert,
   AlertTitle,
 } from "@mui/material";
+import AdminMainButton from "../Views/AdminMainButton";
 
 const CreateActividadForm = () => {
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [hasFamilyMeals, setHasFamilyMeals] = useState(false);
 
   const {
     register,
@@ -27,6 +29,8 @@ const CreateActividadForm = () => {
   const url = `${config.apiUrl}/activities/create_activity/`;
 
   function onSubmit(data) {
+    data.there_are_meting = hasFamilyMeals;
+
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -162,6 +166,17 @@ const CreateActividadForm = () => {
               required
               fullWidth
               {...register("family_reunion")}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={hasFamilyMeals}
+                  onChange={(event) => setHasFamilyMeals(event.target.checked)}
+                />
+              }
+              label="Comidas Familiares"
             />
           </Grid>
 

@@ -8,7 +8,7 @@ import {
   Link,
 } from "@mui/material";
 
-const MayoresInscriptionDetail = ({ data }) => {
+const ParentInscriptionDetail = ({ data }) => {
   return (
     <Card>
       <CardContent>
@@ -38,34 +38,24 @@ const MayoresInscriptionDetail = ({ data }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
+              <strong>Profesión:</strong> {data.profession}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
               <strong>Alergias:</strong> {data.allergy}
             </Typography>
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>Teléfono de Emergencia:</strong> {data.emergency_phone}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1">
-              <strong>Tamaño de Camiseta:</strong> {data.t_shirt_size}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1">
-              <strong>Medicamentos:</strong> {data.medicines}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Typography variant="body1">
-              <strong>Tarjeta Sanitaria:</strong>
-              {data.health_card ? (
+              <strong>Documentación de Delitos Sexuales:</strong>{" "}
+              {data.sexual_crimes_certificate ? (
                 <Link
-                  href={data.health_card}
+                  href={data.sexual_crimes_certificate}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Ver Tarjeta Sanitaria
+                  Ver Documento
                 </Link>
               ) : (
                 " No disponible"
@@ -74,7 +64,39 @@ const MayoresInscriptionDetail = ({ data }) => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
-              <strong>Comprobante de Pago:</strong>
+              <strong>Documentación de Delitos Penales:</strong>{" "}
+              {data.criminal_offenses_certificate ? (
+                <Link
+                  href={data.criminal_offenses_certificate}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver Documento
+                </Link>
+              ) : (
+                " No disponible"
+              )}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
+              <strong>Documento de Protección CISV:</strong>{" "}
+              {data.cisv_safeguarding ? (
+                <Link
+                  href={data.cisv_safeguarding}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver Documento
+                </Link>
+              ) : (
+                " No disponible"
+              )}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Typography variant="body1">
+              <strong>Comprobante de Pago:</strong>{" "}
               {data.pago ? (
                 <Link
                   href={data.pago}
@@ -87,14 +109,13 @@ const MayoresInscriptionDetail = ({ data }) => {
                 " No disponible"
               )}
             </Typography>
-          </Grid>
+          </Grid>{" "}
           <Grid item xs={12}>
             <Typography variant="body1">
               <strong>Autorización de Imagen:</strong>{" "}
               {data.image_authorization ? "Sí" : "No"}
             </Typography>
           </Grid>
-
           <Grid item xs={12}>
             <Typography variant="body1" component="div">
               <strong>Emails de Familiares:</strong>
@@ -111,4 +132,4 @@ const MayoresInscriptionDetail = ({ data }) => {
   );
 };
 
-export default MayoresInscriptionDetail;
+export default ParentInscriptionDetail;

@@ -35,6 +35,7 @@ const NinosInscriptionDetail = ({ data }) => {
               <strong>Fecha de Nacimiento:</strong> {data.user_birthdate}
             </Typography>
           </Grid>
+
           <Grid item xs={12} sm={6}>
             <Typography variant="body1">
               <strong>Alergias:</strong> {data.allergy}
@@ -91,6 +92,17 @@ const NinosInscriptionDetail = ({ data }) => {
             <Typography variant="body1">
               <strong>Autorización de Imagen:</strong>{" "}
               {data.image_authorization ? "Sí" : "No"}
+            </Typography>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Typography variant="body1" component="div">
+              <strong>Emails de Familiares:</strong>
+              {data.family_members_emails
+                ? data.family_members_emails.map((email, index) => (
+                    <div key={index}>{email}</div>
+                  ))
+                : "No hay familiares"}
             </Typography>
           </Grid>
         </Grid>

@@ -14,6 +14,7 @@ import config from "../config";
 const ChangePasswordForm = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const {
     register,
@@ -34,6 +35,11 @@ const ChangePasswordForm = () => {
       return;
     }
 
+    if (data.password_new !== data.repeat_password_new) {
+      setErrorMessage("Las contraseñas no coinciden.");
+      return;
+    }
+
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -45,12 +51,13 @@ const ChangePasswordForm = () => {
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            console.log(data);
-            navigate("/");
+            setSuccessMessage("Contraseña cambiada exitosamente");
+            setErrorMessage(null);
           });
         } else {
           response.json().then((data) => {
             setErrorMessage(data.error);
+            setSuccessMessage(null);
           });
         }
       })
@@ -72,22 +79,6 @@ const ChangePasswordForm = () => {
 
           <Grid item xs={12}>
             <TextField
-              label="Email"
-              required
-              size="small"
-              fullWidth
-              {...register("email", {
-                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
-              })}
-            />
-            {errors.email?.type === "pattern" && (
-              <Typography variant="p" color="error">
-                El formato del email es incorrecto
-              </Typography>
-            )}
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
               label="Contraseña actual"
               required
               size="small"
@@ -107,6 +98,26 @@ const ChangePasswordForm = () => {
               {...register("password_new")}
             />
           </Grid>
+
+          <Grid item xs={12}>
+            <TextField
+              label="Repite contraseña nueva"
+              required
+              size="small"
+              type="password"
+              fullWidth
+              {...register("repeat_password_new")}
+            />
+          </Grid>
+
+          {successMessage && (
+            <Grid item xs={12}>
+              <Alert severity="success">
+                <AlertTitle>Éxito</AlertTitle>
+                {successMessage}
+              </Alert>
+            </Grid>
+          )}
 
           {errorMessage && (
             <Grid item xs={12}>

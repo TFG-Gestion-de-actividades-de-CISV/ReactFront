@@ -12,36 +12,38 @@ import { useForm, Controller } from "react-hook-form";
 import config from "../config";
 import CisvConditionsDialog from "./CisvConditionsDialog";
 
-const NinosInscriptionForm = ({ activity }) => {
+const ParentInscriptionForm = ({ activity }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
     control,
-    setValue,
     reset,
   } = useForm({
     defaultValues: {
+      profession: "",
       allergy: "",
-      emergency_phone: "",
-      t_shirt_size: "",
-      medicines: "",
-      health_card: null,
-      pago: null,
       image_authorization: false,
+      sexual_crimes_certificate: null,
+      criminal_offenses_certificate: null,
+      cisv_safeguarding: null,
+      pago: null,
     },
   });
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
-  const [healthCardUrl, setHealthCardUrl] = useState(null);
-  const [pagoUrl, setPagoUrl] = useState(null);
+  const [sexualCrimesUrl, setSexualCrimesUrl] = useState(null);
+  const [criminalOffensesUrl, setCriminalOffensesUrl] = useState(null);
+  const [cisvSafeguardingUrl, setCisvSafeguardingUrl] = useState(null);
+  const [pagoCardUrl, setPagodUrl] = useState(null);
   const [cisvAutorization, setCisvAutorization] = useState(false);
 
-  const url = `${config.apiUrl}/activities/ninos_inscription/`;
-  const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/ninos`;
+  const url = `${config.apiUrl}/activities/parent_inscription/`;
 
   useEffect(() => {
+    const getOrCreateUrl = `${config.apiUrl}/activities/get_or_create_inscription/parent`;
+
     fetch(getOrCreateUrl, {
       method: "GET",
       credentials: "include",
@@ -54,11 +56,17 @@ const NinosInscriptionForm = ({ activity }) => {
         if (data) {
           // Si hay datos, actualiza los valores del formulario
           reset(data);
-          if (data.health_card) {
-            setHealthCardUrl(data.health_card);
-          }
           if (data.pago) {
-            setPagoUrl(data.pago);
+            setPagodUrl(data.pago);
+          }
+          if (data.criminal_offenses_certificate) {
+            setCriminalOffensesUrl(data.criminal_offenses_certificate);
+          }
+          if (data.sexual_crimes_certificate) {
+            setSexualCrimesUrl(data.sexual_crimes_certificate);
+          }
+          if (data.cisv_safeguarding) {
+            setCisvSafeguardingUrl(data.cisv_safeguarding);
           }
         }
       })
@@ -72,13 +80,18 @@ const NinosInscriptionForm = ({ activity }) => {
 
     const formData = new FormData();
     Object.keys(data).forEach((key) => {
-      if ((key === "health_card" || key === "pago") && data[key]) {
+      if (
+        (key === "pago" ||
+          key == "cisv_safeguarding" ||
+          key == "criminal_offenses_certificate" ||
+          key == "sexual_crimes_certificate") &&
+        data[key]
+      ) {
         formData.append(key, data[key][0]);
       } else {
         formData.append(key, data[key]);
       }
     });
-
     fetch(url, {
       method: "POST",
       credentials: "include",
@@ -92,13 +105,8 @@ const NinosInscriptionForm = ({ activity }) => {
           });
         } else {
           response.json().then((data) => {
-            if (data.error.emergency_phone) {
-              setErrorMessage(data.error.emergency_phone);
-              setSuccessMessage(null);
-            } else {
-              setErrorMessage(data.error);
-              setSuccessMessage(null);
-            }
+            setErrorMessage(data.error);
+            setSuccessMessage(null);
           });
         }
       })
@@ -113,6 +121,26 @@ const NinosInscriptionForm = ({ activity }) => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={4}>
+          <Grid item xs={12} md={6}>
+            <Controller
+              name="profession"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  label="Profesión"
+                  size="small"
+                  type="text"
+                  fullWidth
+                  InputLabelProps={{
+                    shrink: true,
+                  }}
+                  required
+                />
+              )}
+            />
+          </Grid>
+
           <Grid item xs={12} md={6}>
             <Controller
               name="allergy"
@@ -133,70 +161,72 @@ const NinosInscriptionForm = ({ activity }) => {
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <TextField
-              label="Teléfono de emergencia"
-              size="small"
-              type="text"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              required
-              {...register("emergency_phone")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Tamaño de camiseta"
-              size="small"
-              type="text"
-              fullWidth
-              required
-              InputLabelProps={{
-                shrink: true,
-              }}
-              {...register("t_shirt_size")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <TextField
-              label="Medicamentos"
-              size="small"
-              type="text"
-              fullWidth
-              InputLabelProps={{
-                shrink: true,
-              }}
-              {...register("medicines")}
-            />
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <Typography> Tarjeta Sanitaria</Typography>
-            <input type="file" accept=".pdf" {...register("health_card")} />
-            {healthCardUrl && (
+            <Typography> Comprobante de pago</Typography>
+            <input type="file" accept=".pdf" {...register("pago")} />
+            {pagoCardUrl && (
               <div>
-                <a
-                  href={healthCardUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Ver Tarjeta Sanitaria
+                <a href={pagoCardUrl} target="_blank" rel="noopener noreferrer">
+                  Ver comprobante de pago
                 </a>
               </div>
             )}
           </Grid>
 
           <Grid item xs={12} md={6}>
-            <Typography> Comprobante de pago</Typography>
-
-            <input type="file" accept=".pdf" {...register("pago")} />
-            {pagoUrl && (
+            <Typography> Certificado de delitos sexuales</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("sexual_crimes_certificate")}
+            />
+            {sexualCrimesUrl && (
               <div>
-                <a href={pagoUrl} target="_blank" rel="noopener noreferrer">
-                  Ver comprobante de pago
+                <a
+                  href={sexualCrimesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos sexuales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> Certificado de delitos penales</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("criminal_offenses_certificate")}
+            />
+            {criminalOffensesUrl && (
+              <div>
+                <a
+                  href={criminalOffensesUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos penales
+                </a>
+              </div>
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <Typography> CISV Safeguarding</Typography>
+            <input
+              type="file"
+              accept=".pdf"
+              {...register("cisv_safeguarding")}
+            />
+            {cisvSafeguardingUrl && (
+              <div>
+                <a
+                  href={cisvSafeguardingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Ver certificado de delitos penales
                 </a>
               </div>
             )}
@@ -244,6 +274,7 @@ const NinosInscriptionForm = ({ activity }) => {
             <Button
               variant="outlined"
               type="submit"
+              sx={{ marginBottom: 2 }}
               disabled={!cisvAutorization}
             >
               Inscribirse
@@ -255,4 +286,4 @@ const NinosInscriptionForm = ({ activity }) => {
   );
 };
 
-export default NinosInscriptionForm;
+export default ParentInscriptionForm;

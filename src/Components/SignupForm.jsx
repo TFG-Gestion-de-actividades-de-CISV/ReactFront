@@ -8,7 +8,7 @@ import {
   AlertTitle,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import config from "../config";
 
@@ -21,6 +21,11 @@ const RegisterForm = () => {
 
   const [errorMessage, setErrorMessage] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/");
+  };
 
   const url = `${config.apiUrl}/web_user/register/`;
   function onSubmit(data) {
@@ -51,6 +56,7 @@ const RegisterForm = () => {
       email: data.email,
       password: data.password,
       profile: profileData,
+      family_member_email: data.family_member_email,
     };
 
     fetch(url, {
@@ -63,13 +69,18 @@ const RegisterForm = () => {
       .then((response) => {
         if (response.ok) {
           response.json().then((data) => {
-            setSuccessMessage("Registro exitoso!");
+            setSuccessMessage(
+              "Registro exitoso! Para continuar la petición deberá de ser aceptada por administrador "
+            );
             setErrorMessage(null);
           });
         } else {
           response.json().then((data) => {
             if (data.Error.email) {
               setErrorMessage(data.Error.email);
+              setSuccessMessage(null);
+            } else if (data.Error.family_member_email) {
+              setErrorMessage(data.Error.family_member_email);
               setSuccessMessage(null);
             } else if (data.Error.profile) {
               if (data.Error.profile.postal_code) {
@@ -129,7 +140,6 @@ const RegisterForm = () => {
               {...register("surnames")}
             />
           </Grid>
-
           <Grid item xs={12} md={4}>
             <Typography variant="h6">Fecha de nacimiento</Typography>
           </Grid>
@@ -149,8 +159,15 @@ const RegisterForm = () => {
               type="text"
               fullWidth
               required
-              {...register("email")}
+              {...register("email", {
+                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
+              })}
             />
+            {errors.email?.type === "pattern" && (
+              <Typography variant="p" color="error">
+                El formato del email es incorrecto
+              </Typography>
+            )}
           </Grid>
           <Grid item xs={12} md={6}>
             <TextField
@@ -162,7 +179,6 @@ const RegisterForm = () => {
               {...register("phone")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Ciudad"
@@ -173,7 +189,6 @@ const RegisterForm = () => {
               {...register("city")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Código postal"
@@ -184,7 +199,6 @@ const RegisterForm = () => {
               {...register("postal_code")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Contraseña"
@@ -195,7 +209,6 @@ const RegisterForm = () => {
               {...register("password")}
             />
           </Grid>
-
           <Grid item xs={12} md={6}>
             <TextField
               label="Repite contraseña"
@@ -206,13 +219,11 @@ const RegisterForm = () => {
               {...register("repeat_password")}
             />
           </Grid>
-
           <Grid item md={6}>
             <Typography variant="h6">
               ¿Tiene algún familiar registrado?
             </Typography>
           </Grid>
-
           <Grid item md={6}>
             <Switch
               checked={familiares}
@@ -220,7 +231,6 @@ const RegisterForm = () => {
               color="primary"
             ></Switch>
           </Grid>
-
           <Grid item xs={12}>
             {familiares && (
               <TextField
@@ -228,7 +238,15 @@ const RegisterForm = () => {
                 size="small"
                 type="text"
                 fullWidth
+                {...register("family_member_email", {
+                  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/i,
+                })}
               />
+            )}
+            {errors.family_member_email?.type === "pattern" && (
+              <Typography variant="p" color="error">
+                El formato del email es incorrecto
+              </Typography>
             )}
           </Grid>
 
@@ -240,7 +258,6 @@ const RegisterForm = () => {
               </Alert>
             </Grid>
           )}
-
           {errorMessage && (
             <Grid item xs={12}>
               <Alert severity="error">
@@ -249,7 +266,6 @@ const RegisterForm = () => {
               </Alert>
             </Grid>
           )}
-
           <Grid item xs={12}>
             <Button variant="outlined" type="submit">
               Registrarse
@@ -264,6 +280,16 @@ const RegisterForm = () => {
                 </Button>
               </Link>
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleClick}
+              sx={{ marginTop: 2 }}
+            >
+              Volver a Página Principal
+            </Button>
           </Grid>
         </Grid>
       </form>

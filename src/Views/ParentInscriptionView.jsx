@@ -1,10 +1,10 @@
 import React from "react";
-import MayoresInscriptionForm from "../Components/MayoresInscriptionForm";
 import { useParams } from "react-router-dom";
 import { Button, Container, Typography, Box } from "@mui/material";
+import ParentInscriptionForm from "../Components/ParentInscriptionForm";
 import UserMainButton from "./UserMainButton";
 
-const MayoresInscriptionView = () => {
+const ParentInscriptionView = () => {
   const { id } = useParams();
   return (
     <>
@@ -17,7 +17,7 @@ const MayoresInscriptionView = () => {
           minHeight="100vh"
           textAlign="center"
         >
-          <MayoresInscriptionForm activity={id} />
+          <ParentInscriptionForm activity={id} />
           <UserMainButton />
         </Box>
       </Container>
@@ -25,4 +25,4 @@ const MayoresInscriptionView = () => {
   );
 };
 
-export default MayoresInscriptionView;
+export default ParentInscriptionView;
